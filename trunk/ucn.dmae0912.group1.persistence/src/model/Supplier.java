@@ -9,14 +9,16 @@ public class Supplier {
 	String phoneNo;
 	String email;
 
-	public Supplier(int supplierId, String name, String address,
-			String country, String phoneNo, String email) {
-		this.supplierId = supplierId;
+	public Supplier(String name, String address, String country, String phoneNo, String email) {
 		this.name = name;
 		this.address = address;
 		this.country = country;
 		this.phoneNo = phoneNo;
 		this.email = email;
+	}
+	
+	public Supplier() {
+		
 	}
 	
 	public int getSupplierId() {

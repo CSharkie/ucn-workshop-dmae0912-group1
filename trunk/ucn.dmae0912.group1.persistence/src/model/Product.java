@@ -10,10 +10,7 @@ public class Product {
 	String countryOfOrigin;
 	int minStock;
 	
-	public Product(int productId, String name, double purchasePrice,
-			double salePrice, double rentPrice, String countryOfOrigin,
-			int minStock) {
-		this.productId = productId;
+	public Product(String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock) {
 		this.name = name;
 		this.purchasePrice = purchasePrice;
 		this.salePrice = salePrice;
@@ -22,6 +19,10 @@ public class Product {
 		this.minStock = minStock;
 	}
 	
+	public Product() {
+		
+	}
+
 	public int getProductId() {
 		return productId;
 	}

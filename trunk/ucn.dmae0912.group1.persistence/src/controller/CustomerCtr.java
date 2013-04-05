@@ -41,7 +41,7 @@ public class CustomerCtr {
 		
 		try{
 			DbConnection1.startTransaction();
-			DbCustomer dbCust=new DBCustomer();
+			DBCustomer dbCust=new DBCustomer();
 			dbCust.insertCustomer(custObj);
 			DbConnection1.commitTransaction();
 		}
