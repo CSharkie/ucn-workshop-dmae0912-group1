@@ -58,6 +58,7 @@ public class Invoice {
 		System.out.println("Payment Date: " + paymentDate);
 		System.out.println("Amount: " + amount);
 		System.out.println("Price: " + price);
+		saleOrder.print();
 	}
 
 	
