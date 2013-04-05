@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 
 public class SalesOrder {
@@ -21,9 +22,32 @@ public class SalesOrder {
 		this.deliveryStatus=deliveryStatus;
 		saleLines=new ArrayList<SalesLine>();
 	}
+	
 	public void addSalesLine(SalesLine saleLine){
 		saleLines.add(saleLine);
 	}
+	
+	public void removeSalesLine(SalesLine saleLine) {
+		saleLines.remove(saleLine);
+	}
+	
+	public SalesLine getSalesLine(int ID) throws RealException {
+		SalesLine saleLine = null;
+        boolean found = false;
+        Iterator<SalesLine> it = saleLines.iterator();
+        while(it.hasNext() && !found)
+        {
+        	SalesLine lines = it.next();
+            if(lines.getSalesLineId() == ID)
+            {
+            	saleLine = lines;
+                found = true;
+            } 
+        }
+        if(!found) throw new RealException("Sales Line was not found");
+		return saleLine;
+	}
+	
 	public int getSalesOrderId() {
 		return salesOrderId;
 	}

@@ -23,6 +23,10 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import swing2swt.layout.FlowLayout;
+import java.awt.Component;
+import javax.swing.Box;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class MainProgram {
 
@@ -114,9 +118,26 @@ public class MainProgram {
 		RowLayout rl_composite_4 = new RowLayout(SWT.HORIZONTAL);
 		composite_4.setLayout(rl_composite_4);
 		
-		Button button = new Button(composite_4, SWT.NONE);
-		button.setLayoutData(new RowData(61, 35));
-		button.setText("EDIT");
+		Button btnDelete = new Button(composite_4, SWT.NONE);
+		btnDelete.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnDelete.setLayoutData(new RowData(63, 34));
+		btnDelete.setText("DELETE");
+		
+		Button btnSave = new Button(composite_4, SWT.NONE);
+		btnSave.setLayoutData(new RowData(63, 34));
+		btnSave.setText("SAVE");
+		
+		Button button_2 = new Button(composite_4, SWT.NONE);
+		button_2.setLayoutData(new RowData(63, 34));
+		button_2.setText("EDIT");
+		
+		Button btnCreate = new Button(composite_4, SWT.NONE);
+		btnCreate.setLayoutData(new RowData(63, 34));
+		btnCreate.setText("CREATE");
 		
 		TabItem tbtmProducts = new TabItem(tabFolder, SWT.NONE);
 		tbtmProducts.setText("Products");

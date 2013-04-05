@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Customer {
 	
@@ -24,6 +25,28 @@ public class Customer {
 	public void addSale(SalesOrder saleOrder){
 		saleOrders.add(saleOrder);
 	}
+	
+	public void removeSale(SalesOrder saleOrder) {
+		saleOrders.remove(saleOrder);
+	}
+	
+	public SalesOrder getSalesOrder(int ID) throws RealException {  
+		SalesOrder saleOrder = null;
+		        boolean found = false;
+		        Iterator<SalesOrder> it = saleOrders.iterator();
+		        while(it.hasNext() && !found)
+		        {
+		        	SalesOrder orders = it.next();
+		            if(orders.getSalesOrderId() == ID)
+		            {
+		            	saleOrder = orders;
+		                found = true;
+		            } 
+		        }
+		        if(!found) throw new RealException("Order was not found");
+		        return saleOrder;
+		 }
+	
 	public int getCustomerId() {
 		return customerId;
 	}
