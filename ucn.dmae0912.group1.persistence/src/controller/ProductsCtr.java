@@ -52,14 +52,14 @@ public class ProductsCtr {
 		ProdObj.setSalePrice(salePrice);
   
 		try{
-			DbConnection1.startTransaction();
+			DbConnection.startTransaction();
 			DBProduct dbProd = new DBProduct();
 			dbProd.insertProduct(ProdObj);
-			DbConnection1.commitTransaction();
+			DbConnection.commitTransaction();
 		}
 		catch(Exception e)
 		{
-			DbConnection1.rollbackTransaction();
+			DbConnection.rollbackTransaction();
 		}
     }
 	

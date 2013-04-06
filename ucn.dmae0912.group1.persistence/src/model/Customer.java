@@ -86,6 +86,9 @@ public class Customer {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
+	public void setSalesOrders(ArrayList<SalesOrder> saleOrders) {
+		this.saleOrders = saleOrders;
+	}
 	public void print(){
 		System.out.println("Customer Id: " + customerId);
 		System.out.println("Name: " + name);

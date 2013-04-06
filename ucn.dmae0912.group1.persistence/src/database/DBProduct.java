@@ -9,7 +9,7 @@ public class DBProduct implements IFDBProducts {
 	private Connection con;
 	
 	public DBProduct() {
-		con = DbConnection1.getInstance().getDBcon();
+		con = DbConnection.getInstance().getDBcon();
 	}
 	
 	public ArrayList<Product> getAllProducts(boolean retreiveAssociation) {
