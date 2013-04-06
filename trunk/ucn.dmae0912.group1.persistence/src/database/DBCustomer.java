@@ -31,8 +31,8 @@ public class DBCustomer implements IFDBCustomer{
     }
      //insert a new Customer
     public int insertCustomer(Customer cust) throws Exception
-    {  //call to get the next ssn number
-        int nextId = GetMax.getMaxId("Select max(customerId) from Customer");
+    {  //call to get the next Id number
+        int nextId = getMax.getMaxId("Select max(customerId) from Customer");
         nextId = nextId + 1;
         System.out.println("next ID = " +  nextId);
   
@@ -61,8 +61,29 @@ public class DBCustomer implements IFDBCustomer{
 @Override
 	public int updateCustomer(Customer cust)
 	{
-		
-	}
+		Customer custObj  = cust;
+		int rc=-1;
+	
+		String query="UPDATE Customer SET "+
+		 	  "name ='"+ custObj.getName()+"', "+
+		 	  "address ='"+ custObj.getAddress() + "', " +
+	                      "zipCode ='"+ custObj.getZipCode() + "', " +
+	                      "city ='"+ custObj.getCity() + ", " +
+	                      "phoneNo =" +custObj.getPhoneNo() + "' " +
+		          " WHERE customerId = '"+ custObj.getCustomerId() + "'";
+	            System.out.println("Update query:" + query);
+			try{ // update Customer
+	 		Statement stmt = con.createStatement();
+	 		stmt.setQueryTimeout(5);
+	 	 	rc = stmt.executeUpdate(query);
+	
+	 	 	stmt.close();
+		}//slut try
+	 	catch(Exception ex){
+	 	 	System.out.println("Update exception in Customer db: "+ex);
+	  	}
+		return(rc);
+		}
 	
 	public int delete(String customerId)
 	{
@@ -132,14 +153,7 @@ public class DBCustomer implements IFDBCustomer{
                             custObj = buildCustomer(results);
                             //assocaition is to be build
                             stmt.close();
-                            if(retrieveAssociation)
-                            {                       
-                       
-
-                           
-                           
-                            }
-			}
+                 }
                         else{ //no Customer was found
                             custObj = null;
                         }
