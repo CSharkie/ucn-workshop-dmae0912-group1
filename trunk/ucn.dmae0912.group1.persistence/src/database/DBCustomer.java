@@ -11,7 +11,7 @@ public class DBCustomer implements IFDBCustomer {
 
 	/** Creates a new instance of DBCustomer */
 	public DBCustomer() {
-		con = DbConnection1.getInstance().getDBcon();
+		con = DbConnection.getInstance().getDBcon();
 	}
 
 	// Implements the methods from the interface
