@@ -9,7 +9,7 @@ public interface IFDBProducts {
 	// get all Products
 	public ArrayList<Product> getAllProducts(boolean retreiveAssociation);
 	// get one Product by ProductId
-	public Product searchProductId(int id, boolean retreiveAssociation);
+	public Product searchProductId(int productId, boolean retreiveAssociation);
 	//find one Product having the name
 	public Product searchProductName(String name, boolean retriveAssociation);
 	    
