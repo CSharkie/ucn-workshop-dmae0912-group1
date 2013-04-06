@@ -50,14 +50,14 @@ public class SuppliersCtr {
 		supObj.setPhoneNo(phoneNo);
   
 		try{
-			DbConnection1.startTransaction();
+			DbConnection.startTransaction();
 			DBSupplier dbSup = new DBSupplier();
 			dbSup.insertSupplier(supObj);
-			DbConnection1.commitTransaction();
+			DbConnection.commitTransaction();
 		}
 		catch(Exception e)
 		{
-			DbConnection1.rollbackTransaction();
+			DbConnection.rollbackTransaction();
 		}
     }
 

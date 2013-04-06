@@ -9,7 +9,7 @@ public class DBSupplier implements IFDBSuppliers {
 	private Connection con;
 	
 	public DBSupplier() {
-		con = DbConnection1.getInstance().getDBcon();
+		con = DbConnection.getInstance().getDBcon();
 	}
 
 	public ArrayList<Supplier> getAllSuppliers(boolean retreiveAssociation) {

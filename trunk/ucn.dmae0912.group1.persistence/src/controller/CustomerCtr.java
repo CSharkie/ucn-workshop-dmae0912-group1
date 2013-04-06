@@ -40,14 +40,14 @@ public class CustomerCtr {
 		Customer custObj=new Customer(customerId, name, address, zipCode, city, phoneNo);
 		
 		try{
-			DbConnection1.startTransaction();
+			DbConnection.startTransaction();
 			DBCustomer dbCust=new DBCustomer();
 			dbCust.insertCustomer(custObj);
-			DbConnection1.commitTransaction();
+			DbConnection.commitTransaction();
 		}
 		catch(Exception e)
 		{
-			DbConnection1.rollbackTransaction();
+			DbConnection.rollbackTransaction();
 		}
 	}
 }
