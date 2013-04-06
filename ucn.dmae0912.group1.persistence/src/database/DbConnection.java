@@ -2,9 +2,9 @@ package database;
 
 import java.sql.*;
 
-public class DbConnection1 {
+public class DbConnection {
 	private static final String driver = "jdbc:sqlserver://balder.ucn.dk";
-   
+	   
     private static final String  databaseName = ";databaseName=dmae0912_1";
     private static String  userName = "; user=dmae0912_1";
     private static String password = ";password=IsAllowed";
@@ -13,10 +13,10 @@ public class DbConnection1 {
     private DatabaseMetaData dma;
     private static Connection con;
     // an instance of the class is generated
-    private static DbConnection1  instance = null;
+    private static DbConnection  instance = null;
 
     // the constructor is private to ensure that only one object of this class is createt
-    private DbConnection1()
+    private DbConnection()
     {
     	String url = driver + databaseName + userName + password;
 
@@ -68,11 +68,11 @@ public class DbConnection1 {
        return con;
     }
     //this method is used to get the instance of the connection
-    public static DbConnection1 getInstance()
+    public static DbConnection getInstance()
     {
         if (instance == null)
         {
-          instance = new DbConnection1();
+          instance = new DbConnection();
         }
         return instance;
     }
