@@ -106,18 +106,8 @@ public class DBCustomer implements IFDBCustomer{
                  list.add(custObj);	
 		}//end while
                  stmt.close();     
-                 if(retrieveAssociation)
-                 {   //The supervisor and department is to be build as well
-                     for(Customer custObj : list){
-                        String superssn = custObj.getSupervisor().getSsn();
-                        Customer supercust = singleWhere(" ssn = '" + superssn + "'",false);
-                        custObj.setSupervisor(supercust);
-                        System.out.println("Supervisor is seleceted");
-                       // here the department has to be selected as well
-                     }
-                 }//end if   
 			
-		}//slut try	
+		}//end try	
 	 	catch(Exception e){
 	 		System.out.println("Query exception - select: "+e);
 			e.printStackTrace();
@@ -143,16 +133,7 @@ public class DBCustomer implements IFDBCustomer{
                             //assocaition is to be build
                             stmt.close();
                             if(retrieveAssociation)
-                            {   //The supervisor and department is to be build as well
-                                String superssn = custObj.getSupervisor().getSsn();
-                                Customer supercust = singleWhere(" ssn = '" + superssn + "'",false);
-                                custObj.setSupervisor(supercust);
-                                System.out.println("Supervisor is seleceted");
-                                IFDBDepartment dbDeptObj = new DBDepartment();
-                                Department deptObj = dbDeptObj.findDepartment(custObj.getDept().getDnumber(), false);
-                                System.out.println("Department is seleceted ");
-                                custObj.setDepartment(deptObj);
-                             
+                            {                       
                        
 
                            
@@ -171,7 +152,7 @@ public class DBCustomer implements IFDBCustomer{
 	//method to build the query
 	private String buildQuery(String wClause)
 	{
-	    String query="SELECT fname, minit,lname,ssn, address, bdate,sex, salary, superssn,dno  FROM Customer";
+	    String query="SELECT customerId, name, address, zipCode, city, phoneNo  FROM Customer";
 		
 		if (wClause.length()>0)
 			query=query+" WHERE "+ wClause;
@@ -180,18 +161,14 @@ public class DBCustomer implements IFDBCustomer{
 	}
 	//method to build an Customer object
 	private Customer buildCustomer(ResultSet results)
-      {   Customer custObj = new Customer(0, null, null, 0, null, null);
-          try{ // the columns from the table custlayee  are used
-                custObj.setFname(results.getString("fname"));
-                custObj.setMinit(results.getString("minit"));
-                custObj.setLname(results.getString("lname"));
-                custObj.setSsn(results.getString("ssn"));
-                custObj.setBdate(results.getString("bdate"));
+      {   Customer custObj = new Customer();
+          try{ // the columns from the table customer  are used
+                custObj.setCustomerId(results.getInt("customerId"));
+                custObj.setName(results.getString("name"));
                 custObj.setAddress(results.getString("address"));
-                custObj.setSex(results.getString("sex"));
-                custObj.setSalary(results.getDouble("salary"));
-                custObj.setSupervisor(new Customer(results.getString("superssn")));
-                custObj.setDepartment(new Department(results.getInt("dno")));
+                custObj.setZipCode(results.getInt("zipCode"));
+                custObj.setCity(results.getString("city"));
+                custObj.setPhoneNo(results.getString("phoneNo"));
           }
          catch(Exception e)
          {

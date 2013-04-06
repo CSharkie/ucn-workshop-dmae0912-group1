@@ -22,6 +22,9 @@ public class Customer {
 		this.phoneNo=phoneNo;
 		saleOrders=new ArrayList<SalesOrder>();
 	}
+	public Customer(){
+		
+	}
 	public void addSale(SalesOrder saleOrder){
 		saleOrders.add(saleOrder);
 	}
