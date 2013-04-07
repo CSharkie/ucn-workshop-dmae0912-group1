@@ -16,9 +16,9 @@ public class CustomerCtr {
 		allCust=dbCust.getAllCustomers(false);
 		return allCust;
 	}
-	public Customer searchCustomerByName(String name){
+	public ArrayList<Customer> searchCustomersByName(String name){
 		IFDBCustomer dbCust=new DBCustomer();
-		return dbCust.searchCustomerByName(name, true);
+		return dbCust.searchCustomersByName(name, true);
 	}
 	public Customer searchCustomerById(int customerId){
 		IFDBCustomer dbCust=new DBCustomer();
@@ -27,18 +27,11 @@ public class CustomerCtr {
 	public int updateCustomer(int customerId, String name, String address, int zipCode, String city, String phoneNo){
 		IFDBCustomer dbCust=new DBCustomer();
 		Customer cust=new Customer(customerId, name, address, zipCode, city, phoneNo);
-		/*cust.setCustomerId(customerId);
-		cust.setName(name);
-		cust.setAddress(address);
-		cust.setZipCode(zipCode);
-		cust.setCity(city);
-		cust.setPhoneNo(phoneNo); */
 		return dbCust.updateCustomer(cust);
 	}
 	
-	public void insertCustomer(int customerId, String name, String address, int zipCode, String city, String phoneNo){
-		Customer custObj=new Customer(customerId, name, address, zipCode, city, phoneNo);
-		
+	public int insertCustomer(String name, String address, int zipCode, String city, String phoneNo){
+		Customer custObj=new Customer(name, address, zipCode, city, phoneNo);	
 		try{
 			DbConnection.startTransaction();
 			DBCustomer dbCust=new DBCustomer();
@@ -49,5 +42,10 @@ public class CustomerCtr {
 		{
 			DbConnection.rollbackTransaction();
 		}
+		return custObj.getCustomerId();
+	}
+	public void removeCustomer(int customerId) {
+		IFDBCustomer dbCust=new DBCustomer();
+		dbCust.deleteCustomer(customerId);
 	}
 }

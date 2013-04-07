@@ -9,12 +9,12 @@ public interface IFDBCustomer {
     //get one customer by ID
 	public Customer searchCustomerById(int customerId, boolean retrieveAssociation);
 	//get one employee by name
-	public Customer searchCustomerByName(String name, boolean retrieveAssociation);
+	public ArrayList<Customer> searchCustomersByName(String name, boolean retrieveAssociation);
 	
 	//insert a new customer
 	public int insertCustomer(Customer cust) throws Exception;
 	//update information about a customer;
 	public int updateCustomer(Customer cust);
 	
-	public int deleteCustomer(String customerId);
+	public int deleteCustomer(int customerId);
 }

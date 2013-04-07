@@ -21,15 +21,15 @@ public class DBCustomer implements IFDBCustomer {
 	// get one Customer having the ID
 	public Customer searchCustomerById(int customerId,
 			boolean retriveAssociation) {
-		String wClause = "  Customer ID: = '" + customerId + "'";
+		String wClause = " CustomerId = '" + customerId + "'";
 		return singleWhere(wClause, retriveAssociation);
 	}
 
 	// find one Customer having the name
-	public Customer searchCustomerByName(String name, boolean retriveAssociation) {
-		String wClause = "Name: " + name + ",";
+	public ArrayList<Customer> searchCustomersByName(String name, boolean retriveAssociation) {
+		String wClause = "Name LIKE '%" + name + "%'";
 		System.out.println("Customer " + wClause);
-		return singleWhere(wClause, retriveAssociation);
+		return miscWhere(wClause, retriveAssociation);
 	}
 
 	// insert a new Customer
@@ -39,10 +39,10 @@ public class DBCustomer implements IFDBCustomer {
 		int nextId = getMax.getMaxId("Select max(customerId) from Customer");
 		nextId = nextId + 1;
 		System.out.println("next ID = " + nextId);
-
+		cust.setCustomerId(nextId);
 		int rc = -1;
 		String query = "INSERT INTO Customer(customerId, name, address, zipCode, city, phoneNo)  VALUES('"
-				+ nextId
+				+ cust.getCustomerId()
 				+ "','"
 				+ cust.getName()
 				+ "','"
@@ -52,10 +52,10 @@ public class DBCustomer implements IFDBCustomer {
 				+ "','"
 				+ cust.getCity()
 				+ "','"
-				+ cust.getPhoneNo() + "','";
+				+ cust.getPhoneNo() + "');";
 
 		System.out.println("insert : " + query);
-		try { // insert new Customer + dependent
+		try { // insert new Customer
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			rc = stmt.executeUpdate(query);
@@ -76,7 +76,7 @@ public class DBCustomer implements IFDBCustomer {
 		String query = "UPDATE Customer SET " + "name ='" + custObj.getName()
 				+ "', " + "address ='" + custObj.getAddress() + "', "
 				+ "zipCode ='" + custObj.getZipCode() + "', " + "city ='"
-				+ custObj.getCity() + ", " + "phoneNo =" + custObj.getPhoneNo()
+				+ custObj.getCity() + "', " + "phoneNo = '" + custObj.getPhoneNo()
 				+ "' " + " WHERE customerId = '" + custObj.getCustomerId()
 				+ "'";
 		System.out.println("Update query:" + query);
@@ -93,10 +93,10 @@ public class DBCustomer implements IFDBCustomer {
 		return (rc);
 	}
 
-	public int deleteCustomer(String customerId) {
+	public int deleteCustomer(int customerId) {
 		int rc = -1;
 
-		String query = "DELETE FROM Customer WHERE ID = '" + customerId + "'";
+		String query = "DELETE FROM Customer WHERE customerId = '" + customerId + "'";
 		System.out.println(query);
 		try { // delete from Customer
 			Statement stmt = con.createStatement();
