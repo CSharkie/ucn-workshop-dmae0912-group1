@@ -27,8 +27,9 @@ public class SupplierGUI extends Composite {
 	private Text txt_id;
 	private Text txt_name;
 	private Text txt_address;
-	private Text txt_zipCode;
+	private Text txt_country;
 	private Text txt_phoneNo;
+	private Text txt_email;
 	private Text search_name;
 
 	public SupplierGUI(Composite parent, int style) {
@@ -123,8 +124,9 @@ public class SupplierGUI extends Composite {
 				txt_id.setEditable(true);
 				txt_name.setEditable(true);
 				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
+				txt_country.setEditable(true);
 				txt_phoneNo.setEditable(true);
+				txt_email.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -143,8 +145,9 @@ public class SupplierGUI extends Composite {
 				txt_id.setEditable(true);
 				txt_name.setEditable(true);
 				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
+				txt_country.setEditable(true);
 				txt_phoneNo.setEditable(true);
+				txt_email.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -193,22 +196,22 @@ public class SupplierGUI extends Composite {
 		txt_address.setEditable(false);
 		txt_address.setLayoutData(gd_txt_address);
 
-		Label lblZipCode = new Label(composite_7, SWT.NONE);
-		lblZipCode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblCountry = new Label(composite_7, SWT.NONE);
+		lblCountry.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblZipCode.setText("ZIP Code:");
+		lblCountry.setText("Country:");
 
-		txt_zipCode = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_zipCode = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_country = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_country = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_zipCode.widthHint = 203;
-		txt_zipCode.setEditable(false);
-		txt_zipCode.setLayoutData(gd_txt_zipCode);
+		gd_txt_country.widthHint = 203;
+		txt_country.setEditable(false);
+		txt_country.setLayoutData(gd_txt_country);
 
-		Label lblCity = new Label(composite_7, SWT.NONE);
-		lblCity.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblPhoneNo = new Label(composite_7, SWT.NONE);
+		lblPhoneNo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblCity.setText("Phone No:");
+		lblPhoneNo.setText("Phone No:");
 
 		txt_phoneNo = new Text(composite_7, SWT.BORDER);
 		GridData gd_txt_phoneNo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
@@ -216,6 +219,19 @@ public class SupplierGUI extends Composite {
 		gd_txt_phoneNo.widthHint = 203;
 		txt_phoneNo.setEditable(false);
 		txt_phoneNo.setLayoutData(gd_txt_phoneNo);
+		
+		Label lblEmail = new Label(composite_7, SWT.NONE);
+		lblEmail.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+				false, 1, 1));
+		lblEmail.setText("Email:");
+
+		txt_email = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_email = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+				1);
+		gd_txt_email.widthHint = 203;
+		txt_email.setEditable(false);
+		txt_email.setLayoutData(gd_txt_email);
+
 
 	}
 }
