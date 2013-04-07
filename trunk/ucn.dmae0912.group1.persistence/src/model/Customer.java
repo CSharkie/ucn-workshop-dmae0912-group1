@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 public class Customer {
 	
 	int customerId;
@@ -11,7 +8,7 @@ public class Customer {
 	int zipCode;
 	String city;
 	String phoneNo;
-	ArrayList<SalesOrder> saleOrders;
+	//ArrayList<SalesOrder> saleOrders;
 	
 	public Customer(int customerId, String name, String address, int zipCode, String city, String phoneNo){
 		this.customerId=customerId;
@@ -20,12 +17,12 @@ public class Customer {
 		this.zipCode=zipCode;
 		this.city=city;
 		this.phoneNo=phoneNo;
-		saleOrders=new ArrayList<SalesOrder>();
+		//saleOrders=new ArrayList<SalesOrder>();
 	}
 	public Customer(){
 		
 	}
-	public void addSale(SalesOrder saleOrder){
+	/*public void addSale(SalesOrder saleOrder){
 		saleOrders.add(saleOrder);
 	}
 	
@@ -49,7 +46,7 @@ public class Customer {
 		        if(!found) throw new RealException("Order was not found");
 		        return saleOrder;
 		 }
-	
+	*/
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -86,9 +83,11 @@ public class Customer {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	public void setSalesOrders(ArrayList<SalesOrder> saleOrders) {
+	/*
+	 public void setSalesOrders(ArrayList<SalesOrder> saleOrders) {
 		this.saleOrders = saleOrders;
 	}
+	*/
 	public void print(){
 		System.out.println("Customer Id: " + customerId);
 		System.out.println("Name: " + name);

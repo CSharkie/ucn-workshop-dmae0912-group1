@@ -1,8 +1,6 @@
 package database;
 
 import model.Customer;
-import model.SalesOrder;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ public class DBCustomer implements IFDBCustomer {
 	public ArrayList<Customer> getAllCustomers(boolean retriveAssociation) {
 		return miscWhere("", retriveAssociation);
 	}
-
+	
 	// get one Customer having the ID
 	public Customer searchCustomerById(int customerId,
 			boolean retriveAssociation) {
@@ -130,12 +128,14 @@ public class DBCustomer implements IFDBCustomer {
 			while (results.next()) {
 				Customer custObj = new Customer();
 				custObj = buildCustomer(results);
+				/*
 				if (retrieveAssociation) {
 					IFDBSalesOrder salesOrders = new DBSalesOrder();
 					ArrayList<SalesOrder> orders = salesOrders.getAllSalesOrdersByCustomerId(custObj.getCustomerId(), false);
 					custObj.setSalesOrders(orders);
 					System.out.println("Orders are selected");
 				}
+				*/
 				list.add(custObj);
 			}// end while
 			stmt.close();
@@ -148,7 +148,7 @@ public class DBCustomer implements IFDBCustomer {
 		return list;
 	}
 
-	// Singelwhere is used when we only select one Customer
+	// Single where is used when we only select one Customer
 	private Customer singleWhere(String wClause, boolean retrieveAssociation) {
 		ResultSet results;
 		Customer custObj = new Customer();
@@ -163,12 +163,14 @@ public class DBCustomer implements IFDBCustomer {
 			if (results.next()) {
 				custObj = buildCustomer(results);
 				stmt.close();
+				/*
 				if (retrieveAssociation) {
 					IFDBSalesOrder salesOrders = new DBSalesOrder();
 					ArrayList<SalesOrder> orders = salesOrders.getAllSalesOrdersByCustomerId(custObj.getCustomerId(), false);
 					custObj.setSalesOrders(orders);
 					System.out.println("Orders are selected");
 				}
+				*/
 			} else { // no Customer was found
 				custObj = null;
 			}
