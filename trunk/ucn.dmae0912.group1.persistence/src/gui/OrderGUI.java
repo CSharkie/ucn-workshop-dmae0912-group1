@@ -24,11 +24,11 @@ public class OrderGUI extends Composite {
 	private Table table;
 	
 	// Text Fields
-	private Text txt_id;
-	private Text txt_name;
-	private Text txt_address;
-	private Text txt_zipCode;
-	private Text txt_phoneNo;
+	private Text txt_orderID;
+	private Text txt_date;
+	private Text txt_amount;
+	private Text txt_deliveryDate;
+	private Text txt_deliveryStatus;
 	private Text search_name;
 
 	public OrderGUI(Composite parent, int style) {
@@ -120,11 +120,11 @@ public class OrderGUI extends Composite {
 				btn_save.setEnabled(true);
 				btn_create.setEnabled(false);
 				
-				txt_id.setEditable(true);
-				txt_name.setEditable(true);
-				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
-				txt_phoneNo.setEditable(true);
+				txt_orderID.setEditable(true);
+				txt_date.setEditable(true);
+				txt_amount.setEditable(true);
+				txt_deliveryDate.setEditable(true);
+				txt_deliveryStatus.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -140,11 +140,11 @@ public class OrderGUI extends Composite {
 				btn_save.setEnabled(true);
 				btn_create.setEnabled(false);
 				
-				txt_id.setEditable(true);
-				txt_name.setEditable(true);
-				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
-				txt_phoneNo.setEditable(true);
+				txt_orderID.setEditable(true);
+				txt_date.setEditable(true);
+				txt_amount.setEditable(true);
+				txt_deliveryDate.setEditable(true);
+				txt_deliveryStatus.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -157,65 +157,65 @@ public class OrderGUI extends Composite {
 		Composite composite_7 = new Composite(composite_6, SWT.NONE);
 		composite_7.setLayout(new GridLayout(2, false));
 
-		Label lblId = new Label(composite_7, SWT.NONE);
-		lblId.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false,
+		Label lblorderID = new Label(composite_7, SWT.NONE);
+		lblorderID.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false,
 				1, 1));
-		lblId.setBounds(0, 0, 55, 15);
-		lblId.setText("ID:");
+		lblorderID.setBounds(0, 0, 55, 15);
+		lblorderID.setText("Order ID:");
 
-		txt_id = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_id = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
-		gd_txt_id.widthHint = 203;
-		txt_id.setEditable(false);
-		txt_id.setLayoutData(gd_txt_id);
+		txt_orderID = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_orderID = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_txt_orderID.widthHint = 203;
+		txt_orderID.setEditable(false);
+		txt_orderID.setLayoutData(gd_txt_orderID);
 
-		Label lblName = new Label(composite_7, SWT.NONE);
-		lblName.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblDate = new Label(composite_7, SWT.NONE);
+		lblDate.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblName.setText("Name:");
+		lblDate.setText("Date:");
 
-		txt_name = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_name = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_date = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_date = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_name.widthHint = 203;
-		txt_name.setEditable(false);
-		txt_name.setLayoutData(gd_txt_name);
+		gd_txt_date.widthHint = 203;
+		txt_date.setEditable(false);
+		txt_date.setLayoutData(gd_txt_date);
 
-		Label lblAddress = new Label(composite_7, SWT.NONE);
-		lblAddress.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblAmount = new Label(composite_7, SWT.NONE);
+		lblAmount.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblAddress.setText("Address:");
+		lblAmount.setText("Amount:");
 
-		txt_address = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_address = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_amount = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_amount = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_address.widthHint = 203;
-		txt_address.setEditable(false);
-		txt_address.setLayoutData(gd_txt_address);
+		gd_txt_amount.widthHint = 203;
+		txt_amount.setEditable(false);
+		txt_amount.setLayoutData(gd_txt_amount);
 
-		Label lblZipCode = new Label(composite_7, SWT.NONE);
-		lblZipCode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblDeliveryDate = new Label(composite_7, SWT.NONE);
+		lblDeliveryDate.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblZipCode.setText("ZIP Code:");
+		lblDeliveryDate.setText("Delivery Date:");
 
-		txt_zipCode = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_zipCode = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_deliveryDate = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_deliveryDate = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_zipCode.widthHint = 203;
-		txt_zipCode.setEditable(false);
-		txt_zipCode.setLayoutData(gd_txt_zipCode);
+		gd_txt_deliveryDate.widthHint = 203;
+		txt_deliveryDate.setEditable(false);
+		txt_deliveryDate.setLayoutData(gd_txt_deliveryDate);
 
-		Label lblCity = new Label(composite_7, SWT.NONE);
-		lblCity.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblDeliveryStatus = new Label(composite_7, SWT.NONE);
+		lblDeliveryStatus.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblCity.setText("Phone No:");
+		lblDeliveryStatus.setText("Delivery Status:");
 
-		txt_phoneNo = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_phoneNo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_deliveryStatus = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_deliveryStatus = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_phoneNo.widthHint = 203;
-		txt_phoneNo.setEditable(false);
-		txt_phoneNo.setLayoutData(gd_txt_phoneNo);
+		gd_txt_deliveryStatus.widthHint = 203;
+		txt_deliveryStatus.setEditable(false);
+		txt_deliveryStatus.setLayoutData(gd_txt_deliveryStatus);
 
 	}
 }

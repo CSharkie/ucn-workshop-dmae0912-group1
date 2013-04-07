@@ -24,11 +24,10 @@ public class InvoiceGUI extends Composite {
 	private Table table;
 	
 	// Text Fields
-	private Text txt_id;
-	private Text txt_name;
-	private Text txt_address;
-	private Text txt_zipCode;
-	private Text txt_phoneNo;
+	private Text txt_invoiceNo;
+	private Text txt_paymentDate;
+	private Text txt_amount;
+	private Text txt_price;
 	private Text search_name;
 
 	public InvoiceGUI(Composite parent, int style) {
@@ -120,11 +119,11 @@ public class InvoiceGUI extends Composite {
 				btn_save.setEnabled(true);
 				btn_create.setEnabled(false);
 				
-				txt_id.setEditable(true);
-				txt_name.setEditable(true);
-				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
-				txt_phoneNo.setEditable(true);
+				txt_invoiceNo.setEditable(true);
+				txt_paymentDate.setEditable(true);
+				txt_amount.setEditable(true);
+				txt_price.setEditable(true);
+				
 				search_name.setEditable(true);
 			}
 		});
@@ -140,11 +139,11 @@ public class InvoiceGUI extends Composite {
 				btn_save.setEnabled(true);
 				btn_create.setEnabled(false);
 				
-				txt_id.setEditable(true);
-				txt_name.setEditable(true);
-				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
-				txt_phoneNo.setEditable(true);
+				txt_invoiceNo.setEditable(true);
+				txt_paymentDate.setEditable(true);
+				txt_amount.setEditable(true);
+				txt_price.setEditable(true);
+				
 				search_name.setEditable(true);
 			}
 		});
@@ -157,65 +156,53 @@ public class InvoiceGUI extends Composite {
 		Composite composite_7 = new Composite(composite_6, SWT.NONE);
 		composite_7.setLayout(new GridLayout(2, false));
 
-		Label lblId = new Label(composite_7, SWT.NONE);
-		lblId.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false,
+		Label lblInvoiceNo = new Label(composite_7, SWT.NONE);
+		lblInvoiceNo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false,
 				1, 1));
-		lblId.setBounds(0, 0, 55, 15);
-		lblId.setText("ID:");
+		lblInvoiceNo.setBounds(0, 0, 55, 15);
+		lblInvoiceNo.setText("Invoice No:");
 
-		txt_id = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_id = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
-		gd_txt_id.widthHint = 203;
-		txt_id.setEditable(false);
-		txt_id.setLayoutData(gd_txt_id);
+		txt_invoiceNo = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_invoiceNo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_txt_invoiceNo.widthHint = 203;
+		txt_invoiceNo.setEditable(false);
+		txt_invoiceNo.setLayoutData(gd_txt_invoiceNo);
 
-		Label lblName = new Label(composite_7, SWT.NONE);
-		lblName.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblPaymentDate = new Label(composite_7, SWT.NONE);
+		lblPaymentDate.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblName.setText("Name:");
+		lblPaymentDate.setText("Payment Date:");
 
-		txt_name = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_name = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_paymentDate = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_paymentDate = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_name.widthHint = 203;
-		txt_name.setEditable(false);
-		txt_name.setLayoutData(gd_txt_name);
+		gd_txt_paymentDate.widthHint = 203;
+		txt_paymentDate.setEditable(false);
+		txt_paymentDate.setLayoutData(gd_txt_paymentDate);
 
-		Label lblAddress = new Label(composite_7, SWT.NONE);
-		lblAddress.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblAmount = new Label(composite_7, SWT.NONE);
+		lblAmount.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblAddress.setText("Address:");
+		lblAmount.setText("Amount:");
 
-		txt_address = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_address = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_amount = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_amount = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_address.widthHint = 203;
-		txt_address.setEditable(false);
-		txt_address.setLayoutData(gd_txt_address);
+		gd_txt_amount.widthHint = 203;
+		txt_amount.setEditable(false);
+		txt_amount.setLayoutData(gd_txt_amount);
 
-		Label lblZipCode = new Label(composite_7, SWT.NONE);
-		lblZipCode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblPrice = new Label(composite_7, SWT.NONE);
+		lblPrice.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblZipCode.setText("ZIP Code:");
+		lblPrice.setText("Price:");
 
-		txt_zipCode = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_zipCode = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_price = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_price = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_zipCode.widthHint = 203;
-		txt_zipCode.setEditable(false);
-		txt_zipCode.setLayoutData(gd_txt_zipCode);
-
-		Label lblCity = new Label(composite_7, SWT.NONE);
-		lblCity.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false, 1, 1));
-		lblCity.setText("Phone No:");
-
-		txt_phoneNo = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_phoneNo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
-				1);
-		gd_txt_phoneNo.widthHint = 203;
-		txt_phoneNo.setEditable(false);
-		txt_phoneNo.setLayoutData(gd_txt_phoneNo);
+		gd_txt_price.widthHint = 203;
+		txt_price.setEditable(false);
+		txt_price.setLayoutData(gd_txt_price);
 
 	}
 }

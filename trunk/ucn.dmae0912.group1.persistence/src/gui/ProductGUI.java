@@ -26,9 +26,10 @@ public class ProductGUI extends Composite {
 	// Text Fields
 	private Text txt_id;
 	private Text txt_name;
-	private Text txt_address;
-	private Text txt_zipCode;
-	private Text txt_phoneNo;
+	private Text txt_PurchasePrice;
+	private Text txt_SalePrice;
+	private Text txt_RentPrice;
+	private Text txt_CountryOfOrigin;
 	private Text search_name;
 
 	public ProductGUI(Composite parent, int style) {
@@ -122,9 +123,10 @@ public class ProductGUI extends Composite {
 				
 				txt_id.setEditable(true);
 				txt_name.setEditable(true);
-				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
-				txt_phoneNo.setEditable(true);
+				txt_PurchasePrice.setEditable(true);
+				txt_SalePrice.setEditable(true);
+				txt_RentPrice.setEditable(true);
+				txt_CountryOfOrigin.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -142,9 +144,10 @@ public class ProductGUI extends Composite {
 				
 				txt_id.setEditable(true);
 				txt_name.setEditable(true);
-				txt_address.setEditable(true);
-				txt_zipCode.setEditable(true);
-				txt_phoneNo.setEditable(true);
+				txt_PurchasePrice.setEditable(true);
+				txt_SalePrice.setEditable(true);
+				txt_RentPrice.setEditable(true);
+				txt_CountryOfOrigin.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -181,41 +184,55 @@ public class ProductGUI extends Composite {
 		txt_name.setEditable(false);
 		txt_name.setLayoutData(gd_txt_name);
 
-		Label lblAddress = new Label(composite_7, SWT.NONE);
-		lblAddress.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblPurchasePrice = new Label(composite_7, SWT.NONE);
+		lblPurchasePrice.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblAddress.setText("Address:");
+		lblPurchasePrice.setText("Purchase Price:");
 
-		txt_address = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_address = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_PurchasePrice = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_PurchasePrice = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_address.widthHint = 203;
-		txt_address.setEditable(false);
-		txt_address.setLayoutData(gd_txt_address);
+		gd_txt_PurchasePrice.widthHint = 203;
+		txt_PurchasePrice.setEditable(false);
+		txt_PurchasePrice.setLayoutData(gd_txt_PurchasePrice);
 
-		Label lblZipCode = new Label(composite_7, SWT.NONE);
-		lblZipCode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblSalePrice = new Label(composite_7, SWT.NONE);
+		lblSalePrice.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblZipCode.setText("ZIP Code:");
+		lblSalePrice.setText("Sale Price:");
 
-		txt_zipCode = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_zipCode = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_SalePrice = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_SalePrice = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_zipCode.widthHint = 203;
-		txt_zipCode.setEditable(false);
-		txt_zipCode.setLayoutData(gd_txt_zipCode);
+		gd_txt_SalePrice.widthHint = 203;
+		txt_SalePrice.setEditable(false);
+		txt_SalePrice.setLayoutData(gd_txt_SalePrice);
 
-		Label lblCity = new Label(composite_7, SWT.NONE);
-		lblCity.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+		Label lblRentPrice = new Label(composite_7, SWT.NONE);
+		lblRentPrice.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblCity.setText("Phone No:");
+		lblRentPrice.setText("Rent Price:");
 
-		txt_phoneNo = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_phoneNo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_RentPrice = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_RentPrice = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_txt_phoneNo.widthHint = 203;
-		txt_phoneNo.setEditable(false);
-		txt_phoneNo.setLayoutData(gd_txt_phoneNo);
+		gd_txt_RentPrice.widthHint = 203;
+		txt_RentPrice.setEditable(false);
+		txt_RentPrice.setLayoutData(gd_txt_RentPrice);
+		
+		
+		Label lblCountryOfOrigin = new Label(composite_7, SWT.NONE);
+		lblCountryOfOrigin.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+				false, 1, 1));
+		lblCountryOfOrigin.setText("Country Of Origin:");
 
+		txt_CountryOfOrigin = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_countryOfOrigin = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+				1);
+		gd_txt_countryOfOrigin.widthHint = 203;
+		txt_CountryOfOrigin.setEditable(false);
+		txt_CountryOfOrigin.setLayoutData(gd_txt_countryOfOrigin);
+
+		
 	}
 }
