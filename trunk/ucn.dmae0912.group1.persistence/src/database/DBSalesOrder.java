@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Customer;
 import model.SalesOrder;
+import model.Invoice;
 import java.sql.*;
 
 
@@ -132,14 +133,14 @@ public class DBSalesOrder implements IFDBSalesOrder  {
                         salesOrderObj.setCustomer(custObj);
 						//invoice
 						IFDBInvoice dbInvObj = new DBInvoice();
-                        Invoice invObj = dbInvObj.searchInvoiceByNumber(,false);
+                        Invoice invObj = dbInvObj.searchInvoiceByNo(salesOrderObj.getInvoice().getInvoiceNo(),false);
                         System.out.println("Invoice is selected ");
                         salesOrderObj.setInvoice(invObj);
-                        
 					list.add(salesOrderObj);
 				}// end while
 				stmt.close();
 
+			}
 			}// end try
 			catch (Exception e) {
 				System.out.println("Query exception - select: " + e);
@@ -164,10 +165,16 @@ public class DBSalesOrder implements IFDBSalesOrder  {
 					salesOrderObj = buildSalesOrder(results);
 					stmt.close();
 					if (retrieveAssociation) {
-						IFDBSalesLine salesLine = new DBSalesLine();
-						ArrayList<SalesLine> salesLines = salesLine.getAllSalesLinesBySalesLineId(salesLineObj.getSalesLineId(), false);
-						salesLineObj.setSalesLines(salesLine);
-						System.out.println("Lines are selected");
+						//customer
+						IFDBCustomer dbCustObj = new DBCustomer();
+                        Customer custObj = dbCustObj.searchCustomerById(salesOrderObj.getCustomer().getCustomerId(), false);
+                        System.out.println("Customer is selected ");
+                        salesOrderObj.setCustomer(custObj);
+						//invoice
+						IFDBInvoice dbInvObj = new DBInvoice();
+                        Invoice invObj = dbInvObj.searchInvoiceByNo(salesOrderObj.getInvoice().getInvoiceNo(),false);
+                        System.out.println("Invoice is selected ");
+                        salesOrderObj.setInvoice(invObj);
 					}
 				} else { // no SalesOrder was found
 					salesOrderObj = null;
