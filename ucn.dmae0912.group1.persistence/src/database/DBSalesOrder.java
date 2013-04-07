@@ -125,11 +125,17 @@ public class DBSalesOrder implements IFDBSalesOrder  {
 					SalesOrder salesOrderObj = new SalesOrder();
 					salesOrderObj = buildSalesOrder(results);
 					if (retrieveAssociation) {
-						IFDBSalesLine salesLine = new DBSalesLine();
-						ArrayList<SalesLine> salesLines = salesLine.getAllSalesLinesBySalesLineId(salesLineObj.getSalesLineId(), false);
-						salesLineObj.setSalesLines(salesLine);
-						System.out.println("Lines are selected");
-					}
+						//customer
+						IFDBCustomer dbCustObj = new DBCustomer();
+                        Customer custObj = dbCustObj.searchCustomerById(salesOrderObj.getCustomer().getCustomerId(), false);
+                        System.out.println("Customer is selected ");
+                        salesOrderObj.setCustomer(custObj);
+						//invoice
+						IFDBInvoice dbInvObj = new DBInvoice();
+                        Invoice invObj = dbInvObj.searchInvoiceByNumber(,false);
+                        System.out.println("Invoice is selected ");
+                        salesOrderObj.setInvoice(invObj);
+                        
 					list.add(salesOrderObj);
 				}// end while
 				stmt.close();
