@@ -1,5 +1,7 @@
 package gui;
 
+import controller.CustomerCtr;
+
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +23,8 @@ import org.eclipse.swt.layout.GridData;
 
 public class CustomerGUI extends Composite {
 	
+	CustomerCtr custCtr;
+	
 	// Tables
 	private Table table;
 	
@@ -30,6 +34,7 @@ public class CustomerGUI extends Composite {
 	private Text txt_address;
 	private Text txt_zipCode;
 	private Text txt_phoneNo;
+	private Text txt_city;
 	private Text search_name;
 
 	public CustomerGUI(Composite parent, int style) {
@@ -53,6 +58,13 @@ public class CustomerGUI extends Composite {
 		search_name.setLayoutData(new RowData(116, SWT.DEFAULT));
 
 		Button btn_search = new Button(composite_8, SWT.NONE);
+		btn_search.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String name = search_name.getText();
+				custCtr.searchCustomerByName(name);
+			}
+		});
 		btn_search.setText("Search");
 
 		Composite composite_9 = new Composite(composite_2, SWT.NONE);
@@ -90,6 +102,18 @@ public class CustomerGUI extends Composite {
 
 		final Button btn_delete = new Button(composite_5, SWT.CENTER);
 		final Button btn_save = new Button(composite_5, SWT.CENTER);
+		btn_save.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				
+				int customerId = Integer.parseInt(txt_id.getText());
+				String name = txt_name.getText();
+				String address = txt_address.getText();
+				int zipCode = Integer.parseInt(txt_zipCode.getText());
+				String city = txt_city.getText();
+				String phoneNo = txt_phoneNo.getText();
+				custCtr.updateCustomer(customerId, name, address, zipCode, city, phoneNo);
+			}
+		});
 		final Button btn_edit = new Button(composite_5, SWT.CENTER);
 		final Button btn_create = new Button(composite_5, SWT.CENTER);
 		
@@ -100,6 +124,8 @@ public class CustomerGUI extends Composite {
 				btn_edit.setEnabled(false);
 				btn_save.setEnabled(false);
 				btn_create.setEnabled(false);
+				// TODO Needs to be implemented into controller
+				// custCtr.removeCustomer();
 			}
 		});
 		btn_delete.setLayoutData(new RowData(75, 50));
@@ -125,6 +151,7 @@ public class CustomerGUI extends Composite {
 				txt_name.setEditable(true);
 				txt_address.setEditable(true);
 				txt_zipCode.setEditable(true);
+				txt_city.setEditable(true);
 				txt_phoneNo.setEditable(true);
 				search_name.setEditable(true);
 			}
@@ -145,8 +172,18 @@ public class CustomerGUI extends Composite {
 				txt_name.setEditable(true);
 				txt_address.setEditable(true);
 				txt_zipCode.setEditable(true);
+				txt_city.setEditable(true);
 				txt_phoneNo.setEditable(true);
 				search_name.setEditable(true);
+				
+				int customerId = Integer.parseInt(txt_id.getText());
+				String name = txt_name.getText();
+				String address = txt_address.getText();
+				int zipCode = Integer.parseInt(txt_zipCode.getText());
+				String city = txt_city.getText();
+				String phoneNo = txt_phoneNo.getText();
+				
+				custCtr.insertCustomer(customerId, name, address, zipCode, city, phoneNo);
 			}
 		});
 		btn_create.setText("CREATE");
@@ -209,7 +246,19 @@ public class CustomerGUI extends Composite {
 		Label lblCity = new Label(composite_7, SWT.NONE);
 		lblCity.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
-		lblCity.setText("Phone No:");
+		lblCity.setText("City:");
+		
+		txt_city = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_city = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+				1);
+		gd_txt_city.widthHint = 203;
+		txt_city.setEditable(false);
+		txt_city.setLayoutData(gd_txt_city);
+		
+		Label lblPhoneNo = new Label(composite_7, SWT.NONE);
+		lblPhoneNo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+				false, 1, 1));
+		lblPhoneNo.setText("Phone No:");
 
 		txt_phoneNo = new Text(composite_7, SWT.BORDER);
 		GridData gd_txt_phoneNo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
