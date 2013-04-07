@@ -16,6 +16,9 @@ public class Invoice {
 		this.price = price;
 		this.saleOrder=saleOrder;
 	}
+	public Invoice(){
+		
+	}
 	public int getInvoiceNo() {
 		return invoiceNo;
 	}
