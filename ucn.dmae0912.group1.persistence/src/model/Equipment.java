@@ -1,13 +1,18 @@
 package model;
 
-public class Equipment {
+public class Equipment extends Product {
 
 	String type;
 	String description;
 	
 	public Equipment(String type, String description) {
+		super();
 		this.type = type;
 		this.description = description;
+	}
+	
+	public Equipment() {
+		
 	}
 	
 	public String getType() {

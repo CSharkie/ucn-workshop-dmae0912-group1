@@ -1,13 +1,18 @@
 package model;
 
-public class Clothing {
+public class Clothing extends Product {
 	
 	String size;
 	String color;
 	
 	public Clothing(String size, String color) {
+		super();
 		this.size = size;
 		this.color = color;
+	}
+	
+	public Clothing() {
+		
 	}
 	
 	public String getSize() {
