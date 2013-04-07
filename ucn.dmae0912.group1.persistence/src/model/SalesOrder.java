@@ -22,6 +22,9 @@ public class SalesOrder {
 		this.deliveryStatus=deliveryStatus;
 		saleLines=new ArrayList<SalesLine>();
 	}
+	public SalesOrder(){
+		
+	}
 	
 	public void addSalesLine(SalesLine saleLine){
 		saleLines.add(saleLine);
