@@ -1,13 +1,18 @@
 package model;
 
-public class GunReplicas {
+public class GunReplicas extends Product {
 	
 	String fabric;
 	double caliber;
 	
 	public GunReplicas(String fabric, double caliber) {
+		super();
 		this.fabric = fabric;
 		this.caliber = caliber;
+	}
+	
+	public GunReplicas() {
+		
 	}
 
 	public String getFabric() {
