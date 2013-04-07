@@ -116,7 +116,7 @@ public class DBProduct implements IFDBProducts {
 	
 		while( results.next() ){
 	     	 Product prodObj = new Product();
-		 prodObj = buildProduct(results);	
+		 prodObj = buildProduct(results);
                  list.add(prodObj);	
 		}//end while
                  stmt.close();     
