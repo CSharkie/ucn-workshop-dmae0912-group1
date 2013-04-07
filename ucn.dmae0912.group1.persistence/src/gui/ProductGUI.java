@@ -19,14 +19,17 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 
 public class ProductGUI extends Composite {
-
+	
+	// Tables
 	private Table table;
-	private Text text;
-	private Text text_1;
-	private Text text_2;
-	private Text text_3;
-	private Text text_4;
-	private Text text_5;
+	
+	// Text Fields
+	private Text txt_id;
+	private Text txt_name;
+	private Text txt_address;
+	private Text txt_zipCode;
+	private Text txt_phoneNo;
+	private Text search_name;
 
 	public ProductGUI(Composite parent, int style) {
 		super(parent, style);
@@ -42,14 +45,14 @@ public class ProductGUI extends Composite {
 		rl_composite_8.center = true;
 		composite_8.setLayout(rl_composite_8);
 
-		Label lblNewLabel = new Label(composite_8, SWT.NONE);
-		lblNewLabel.setText("Name:");
+		Label lbl_name = new Label(composite_8, SWT.NONE);
+		lbl_name.setText("Name:");
 
-		text_5 = new Text(composite_8, SWT.BORDER);
-		text_5.setLayoutData(new RowData(116, SWT.DEFAULT));
+		search_name = new Text(composite_8, SWT.BORDER);
+		search_name.setLayoutData(new RowData(116, SWT.DEFAULT));
 
-		Button btnNewButton = new Button(composite_8, SWT.NONE);
-		btnNewButton.setText("Search");
+		Button btn_search = new Button(composite_8, SWT.NONE);
+		btn_search.setText("Search");
 
 		Composite composite_9 = new Composite(composite_2, SWT.NONE);
 		composite_9.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -84,26 +87,68 @@ public class ProductGUI extends Composite {
 		Composite composite_5 = new Composite(composite_4, SWT.NONE);
 		composite_5.setLayout(new RowLayout(SWT.HORIZONTAL));
 
-		Button button = new Button(composite_5, SWT.CENTER);
-		button.setLayoutData(new RowData(75, 50));
-		button.setText("DELETE");
-
-		Button button_1 = new Button(composite_5, SWT.CENTER);
-		button_1.setLayoutData(new RowData(75, 50));
-		button_1.setText("SAVE");
-
-		Button button_3 = new Button(composite_5, SWT.CENTER);
-		button_3.setLayoutData(new RowData(75, 50));
-		button_3.setText("EDIT");
-
-		Button button_4 = new Button(composite_5, SWT.CENTER);
-		button_4.setLayoutData(new RowData(75, 50));
-		button_4.addSelectionListener(new SelectionAdapter() {
+		final Button btn_delete = new Button(composite_5, SWT.CENTER);
+		final Button btn_save = new Button(composite_5, SWT.CENTER);
+		final Button btn_edit = new Button(composite_5, SWT.CENTER);
+		final Button btn_create = new Button(composite_5, SWT.CENTER);
+		
+		btn_delete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				btn_delete.setEnabled(true);
+				btn_edit.setEnabled(false);
+				btn_save.setEnabled(false);
+				btn_create.setEnabled(false);
 			}
 		});
-		button_4.setText("CREATE");
+		btn_delete.setLayoutData(new RowData(75, 50));
+		btn_delete.setText("DELETE");
+		btn_delete.setEnabled(false);
+
+		
+		btn_save.setLayoutData(new RowData(75, 50));
+		btn_save.setText("SAVE");
+		btn_save.setEnabled(false);
+
+		
+		btn_edit.setLayoutData(new RowData(75, 50));
+		btn_edit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				btn_delete.setEnabled(true);
+				btn_edit.setEnabled(false);
+				btn_save.setEnabled(true);
+				btn_create.setEnabled(false);
+				
+				txt_id.setEditable(true);
+				txt_name.setEditable(true);
+				txt_address.setEditable(true);
+				txt_zipCode.setEditable(true);
+				txt_phoneNo.setEditable(true);
+				search_name.setEditable(true);
+			}
+		});
+		btn_edit.setText("EDIT");
+
+		
+		btn_create.setLayoutData(new RowData(75, 50));
+		btn_create.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				btn_delete.setEnabled(false);
+				btn_edit.setEnabled(false);
+				btn_save.setEnabled(true);
+				btn_create.setEnabled(false);
+				
+				txt_id.setEditable(true);
+				txt_name.setEditable(true);
+				txt_address.setEditable(true);
+				txt_zipCode.setEditable(true);
+				txt_phoneNo.setEditable(true);
+				search_name.setEditable(true);
+			}
+		});
+		btn_create.setText("CREATE");
 
 		Composite composite_6 = new Composite(composite_3, SWT.NONE);
 		composite_6.setLayoutData(BorderLayout.CENTER);
@@ -118,54 +163,59 @@ public class ProductGUI extends Composite {
 		lblId.setBounds(0, 0, 55, 15);
 		lblId.setText("ID:");
 
-		text = new Text(composite_7, SWT.BORDER);
-		GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
-		gd_text.widthHint = 203;
-		text.setLayoutData(gd_text);
+		txt_id = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_id = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_txt_id.widthHint = 203;
+		txt_id.setEditable(false);
+		txt_id.setLayoutData(gd_txt_id);
 
 		Label lblName = new Label(composite_7, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
 		lblName.setText("Name:");
 
-		text_1 = new Text(composite_7, SWT.BORDER);
-		GridData gd_text_1 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_name = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_name = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_text_1.widthHint = 203;
-		text_1.setLayoutData(gd_text_1);
+		gd_txt_name.widthHint = 203;
+		txt_name.setEditable(false);
+		txt_name.setLayoutData(gd_txt_name);
 
 		Label lblAddress = new Label(composite_7, SWT.NONE);
 		lblAddress.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
 		lblAddress.setText("Address:");
 
-		text_2 = new Text(composite_7, SWT.BORDER);
-		GridData gd_text_2 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_address = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_address = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_text_2.widthHint = 203;
-		text_2.setLayoutData(gd_text_2);
+		gd_txt_address.widthHint = 203;
+		txt_address.setEditable(false);
+		txt_address.setLayoutData(gd_txt_address);
 
 		Label lblZipCode = new Label(composite_7, SWT.NONE);
 		lblZipCode.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
 		lblZipCode.setText("ZIP Code:");
 
-		text_3 = new Text(composite_7, SWT.BORDER);
-		GridData gd_text_3 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_zipCode = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_zipCode = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_text_3.widthHint = 203;
-		text_3.setLayoutData(gd_text_3);
+		gd_txt_zipCode.widthHint = 203;
+		txt_zipCode.setEditable(false);
+		txt_zipCode.setLayoutData(gd_txt_zipCode);
 
 		Label lblCity = new Label(composite_7, SWT.NONE);
 		lblCity.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 1, 1));
 		lblCity.setText("Phone No:");
 
-		text_4 = new Text(composite_7, SWT.BORDER);
-		GridData gd_text_4 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+		txt_phoneNo = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_phoneNo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
 				1);
-		gd_text_4.widthHint = 203;
-		text_4.setLayoutData(gd_text_4);
+		gd_txt_phoneNo.widthHint = 203;
+		txt_phoneNo.setEditable(false);
+		txt_phoneNo.setLayoutData(gd_txt_phoneNo);
 
 	}
 }

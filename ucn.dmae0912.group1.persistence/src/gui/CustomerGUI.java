@@ -31,11 +31,6 @@ public class CustomerGUI extends Composite {
 	private Text txt_zipCode;
 	private Text txt_phoneNo;
 	private Text search_name;
-	
-	// Buttons
-	private Button btn_edit;
-	private Button btn_save;
-	private Button btn_create;
 
 	public CustomerGUI(Composite parent, int style) {
 		super(parent, style);
@@ -94,6 +89,10 @@ public class CustomerGUI extends Composite {
 		composite_5.setLayout(new RowLayout(SWT.HORIZONTAL));
 
 		final Button btn_delete = new Button(composite_5, SWT.CENTER);
+		final Button btn_save = new Button(composite_5, SWT.CENTER);
+		final Button btn_edit = new Button(composite_5, SWT.CENTER);
+		final Button btn_create = new Button(composite_5, SWT.CENTER);
+		
 		btn_delete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -107,12 +106,12 @@ public class CustomerGUI extends Composite {
 		btn_delete.setText("DELETE");
 		btn_delete.setEnabled(false);
 
-		final Button btn_save = new Button(composite_5, SWT.CENTER);
+		
 		btn_save.setLayoutData(new RowData(75, 50));
 		btn_save.setText("SAVE");
 		btn_save.setEnabled(false);
 
-		final Button btn_edit = new Button(composite_5, SWT.CENTER);
+		
 		btn_edit.setLayoutData(new RowData(75, 50));
 		btn_edit.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -132,7 +131,7 @@ public class CustomerGUI extends Composite {
 		});
 		btn_edit.setText("EDIT");
 
-		final Button btn_create = new Button(composite_5, SWT.CENTER);
+		
 		btn_create.setLayoutData(new RowData(75, 50));
 		btn_create.addSelectionListener(new SelectionAdapter() {
 			@Override
