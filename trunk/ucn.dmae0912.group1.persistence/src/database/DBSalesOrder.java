@@ -6,10 +6,6 @@ import model.Customer;
 import model.SalesOrder;
 import java.sql.*;
 
-import com.sun.org.apache.xml.internal.utils.StringToIntTable;
-
-import sun.io.Converters;
-
 
 public class DBSalesOrder implements IFDBSalesOrder  {
 
@@ -25,13 +21,13 @@ public class DBSalesOrder implements IFDBSalesOrder  {
 	}
 	
 	public ArrayList<SalesOrder> getAllSalesOrders(boolean retriveAssociation) {
-		return miscWhere("", retriveAssociation);
+		return miscWhere(0, retriveAssociation);
 	}
 
 
 	public SalesOrder getSaleOrderById(int customerId,
 			boolean retriveAssociation) {
-		String wClause = "  Customer ID: = '" + customerId + "'";
+		int wClause =  customerId;
 		return singleWhere(wClause, retriveAssociation);
 	}
 
@@ -113,7 +109,7 @@ public class DBSalesOrder implements IFDBSalesOrder  {
 	// private methods
 		// michWere is used whenever we want to select more than one SalesOrder
 
-		private ArrayList<SalesOrder> miscWhere(String wClause,
+		private ArrayList<SalesOrder> miscWhere(int wClause,
 				boolean retrieveAssociation) {
 			ResultSet results;
 			ArrayList<SalesOrder> list = new ArrayList<SalesOrder>();
@@ -147,7 +143,7 @@ public class DBSalesOrder implements IFDBSalesOrder  {
 		}
 
 		// Single where is used when we only select one SalesOrder
-		private SalesOrder singleWhere(String wClause, boolean retrieveAssociation) {
+		private SalesOrder singleWhere(int wClause, boolean retrieveAssociation) {
 			ResultSet results;
 			SalesOrder salesOrderObj = new SalesOrder();
 
@@ -178,10 +174,10 @@ public class DBSalesOrder implements IFDBSalesOrder  {
 		}
 
 		// method to build the query
-		private String buildQuery(String wClause) {
+		private String buildQuery(int wClause) {
 			String query = "SELECT salesOrderId, date, amount, deliveryDate, deliveryStatus  FROM SalesOrder";
 
-			if (wClause.length() > 0)
+			if (wClause > 0)
 				query = query + " WHERE " + wClause;
 
 			return query;
