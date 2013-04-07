@@ -95,7 +95,7 @@ public class DBCustomer implements IFDBCustomer {
 		return (rc);
 	}
 
-	public int delete(String customerId) {
+	public int deleteCustomer(String customerId) {
 		int rc = -1;
 
 		String query = "DELETE FROM Customer WHERE ID = '" + customerId + "'";

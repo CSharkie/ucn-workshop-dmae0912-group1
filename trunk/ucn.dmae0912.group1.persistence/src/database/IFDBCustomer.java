@@ -15,4 +15,6 @@ public interface IFDBCustomer {
 	public int insertCustomer(Customer cust) throws Exception;
 	//update information about a customer;
 	public int updateCustomer(Customer cust);
+	
+	public int deleteCustomer(String customerId);
 }
