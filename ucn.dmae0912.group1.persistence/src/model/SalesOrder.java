@@ -13,6 +13,7 @@ public class SalesOrder {
 	Date deliveryDate;
 	Boolean deliveryStatus;   // false=under delivery(undelivered) || true=delivered
 	Customer customer;
+	Invoice invoice;
 	ArrayList<SalesLine> saleLines;
 	
 	public SalesOrder(int salesOrderId, Date date, int amount, Date deliveryDate, Boolean deliveryStatus){
@@ -31,6 +32,12 @@ public class SalesOrder {
 	}
 	public Customer getCustomer(){
 		return customer;
+	}
+	public void setInvoice(Invoice invoice){
+		this.invoice=invoice;
+	}
+	public Invoice getInvoice(){
+		return invoice;
 	}
 	public void addSalesLine(SalesLine saleLine){
 		saleLines.add(saleLine);

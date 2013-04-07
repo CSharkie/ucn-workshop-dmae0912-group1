@@ -1,24 +1,50 @@
 package model;
 
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Invoice {
 	int invoiceNo;
 	Date paymentDate;
 	int amount;
 	int price;
-	SalesOrder saleOrder;
+	//SalesOrder saleOrder;
+	ArrayList<SalesOrder> salesOrders;
 	
-	public Invoice(int invoiceNo, Date paymentDate, int amount, int price, SalesOrder saleOrder) {
+	public Invoice(int invoiceNo, Date paymentDate, int amount, int price) {
 		this.invoiceNo = invoiceNo;
 		this.paymentDate = paymentDate;
 		this.amount = amount;
 		this.price = price;
-		this.saleOrder=saleOrder;
+		salesOrders=new ArrayList<SalesOrder>();
 	}
 	public Invoice(){
 		
 	}
+	public void addSalesOrder(SalesOrder salesOrder){
+		salesOrders.add(salesOrder);
+	}
+	public void removeSale(SalesOrder saleOrder) {
+		salesOrders.remove(saleOrder);
+	}
+	
+	public SalesOrder getSalesOrder(int ID) throws RealException {  
+		SalesOrder saleOrder = null;
+		        boolean found = false;
+		        Iterator<SalesOrder> it = salesOrders.iterator();
+		        while(it.hasNext() && !found)
+		        {
+		        	SalesOrder orders = it.next();
+		            if(orders.getSalesOrderId() == ID)
+		            {
+		            	saleOrder = orders;
+		                found = true;
+		            } 
+		        }
+		        if(!found) throw new RealException("Order was not found");
+		        return saleOrder;
+		 }
 	public int getInvoiceNo() {
 		return invoiceNo;
 	}
@@ -50,18 +76,11 @@ public class Invoice {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public SalesOrder getSaleOrder() {
-		return saleOrder;
-	}
-	public void setSaleOrder(SalesOrder saleOrder) {
-		this.saleOrder = saleOrder;
-	}
 	public void print(){
 		System.out.println("Invoice Number: " + invoiceNo);
 		System.out.println("Payment Date: " + paymentDate);
 		System.out.println("Amount: " + amount);
 		System.out.println("Price: " + price);
-		saleOrder.print();
 	}
 
 	
