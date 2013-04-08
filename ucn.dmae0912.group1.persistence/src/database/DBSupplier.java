@@ -17,29 +17,35 @@ public class DBSupplier implements IFDBSuppliers {
 	}
 
 	public Supplier searchSupplierId(int supplierId, boolean retreiveAssociation) {
-		String wClause = "  Supplier ID: = '" + supplierId + "'";
+		String wClause = " SupplierId = '" + supplierId + "'";
         return singleWhere(wClause, retreiveAssociation);
 	}
 
-	public Supplier searchSupplierName(String name, boolean retriveAssociation) {
-		String wClause = "Name: " + name + ",";
+	public ArrayList<Supplier> searchSupplierName(String name, boolean retriveAssociation) {
+		String wClause = "Name LIKE '%" + name + "%'";
         System.out.println("Supplier " + wClause);
-        return singleWhere(wClause, retriveAssociation);
+        return miscWhere(wClause, retriveAssociation);
 	}
 
 	public int insertSupplier(Supplier sup) throws Exception {
 		int nextId = getMax.getMaxId("Select max(supplierId) from Supplier");
         nextId = nextId + 1;
         System.out.println("next ID = " +  nextId);
-  
+        
+        sup.setSupplierId(nextId);
        int rs = -1;
-	   String query="INSERT INTO Supplier(supplierId, name, address, country, phoneNo, email)  VALUES('"+
-			nextId + "','" +
-			sup.getName() + "','" +
-			sup.getAddress() + "','" +
-			sup.getCountry() + "','" +
-			sup.getPhoneNo() + "','" +
-			sup.getEmail() + "','" ;
+	   String query="INSERT INTO Supplier(supplierId, name, address, country, phoneNo, email)  VALUES('"
+		+ sup.getSupplierId()
+	    + "','"
+		+ sup.getName()
+		+ "','"
+		+ sup.getAddress()
+		+ "','" 
+		+ sup.getCountry()
+		+ "','"
+		+ sup.getPhoneNo()
+		+ "','"
+		+ sup.getEmail() + "');" ;
 
        System.out.println("insert : " + query);
       try{ // insert new Supplier +  dependent
@@ -57,15 +63,27 @@ public class DBSupplier implements IFDBSuppliers {
 
 	public int updateSupplier(Supplier sup) {
 		Supplier supObj  = sup;
-		int rs=-1;
+		int rs = -1;
 	
-		String query="UPDATE Supplier SET "+
-		 	  "name ='"+ supObj.getName()+"', "+
-		 	  "address ='"+ supObj.getAddress() + "', " +
-	                      "country ='"+ supObj.getCountry() + "', " +
-	                      "phoneNo ='"+ supObj.getPhoneNo() + ", " +
-	                      "email ='" + supObj.getEmail() + "' " +
-		          " WHERE supplierId = '"+ supObj.getSupplierId() + "'";
+		String query= "UPDATE Supplier SET "
+		+ "name ='" 
+		+ supObj.getName()
+		+ "', "
+		+ "address ='" 
+		+ supObj.getAddress() 
+		+ "', "
+		+ "country ='"
+		+ supObj.getCountry() 
+		+ "', " 
+		+ "phoneNo ='" 
+		+ supObj.getPhoneNo() 
+		+ "', " 
+		+ "email ='" 
+		+ supObj.getEmail() 
+		+ "' " 
+		+ " WHERE supplierId = '" 
+		+ supObj.getSupplierId()
+		+ "'";
 	            System.out.println("Update query:" + query);
 			try{ // update Supplier
 	 		Statement stmt = con.createStatement();
@@ -80,11 +98,11 @@ public class DBSupplier implements IFDBSuppliers {
 		return(rs);
 		}
 	
-	public int delete(String supplierId)
+	public int deleteSupplier(int supplierId)
 	{
                int rs=-1;
 	  
-	  	String query="DELETE FROM Supplier WHERE ID = '" +
+	  	String query="DELETE FROM Supplier WHERE supplierId = '" +
 	  			supplierId + "'";
                 System.out.println(query);
 	  	try{ // delete from Supplier

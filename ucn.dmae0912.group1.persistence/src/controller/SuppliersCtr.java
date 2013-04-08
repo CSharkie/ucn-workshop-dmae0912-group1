@@ -18,37 +18,26 @@ public class SuppliersCtr {
 	    return allSuppliers;
 	}
 	
-	public Supplier findByName(String name) {
+	public ArrayList<Supplier> findByName(String name) {
 		IFDBSuppliers dbSuppliers = new DBSupplier();
 		return dbSuppliers.searchSupplierName(name, true);
 	}
 	
-	public Supplier findById(int id) {
+	public Supplier findById(int supplierId) {
 		IFDBSuppliers dbSuppliers = new DBSupplier();
-		return dbSuppliers.searchSupplierId(id, true);
+		return dbSuppliers.searchSupplierId(supplierId, true);
 	}
 	
-	public int updateSupplier(String name, String address, String country, String phoneNo, String email)
+	public int updateSupplier(int supplierId, String name, String address, String country, String phoneNo, String email)
     {
 		IFDBSuppliers dbSuppliers = new DBSupplier();
-		Supplier supplier = new Supplier();
-        supplier.setName(name);
-        supplier.setAddress(address);
-        supplier.setCountry(country);
-        supplier.setEmail(email);
-        supplier.setPhoneNo(phoneNo);
+		Supplier supplier = new Supplier(supplierId, name, address, country, phoneNo, email);
         return  dbSuppliers.updateSupplier(supplier);
     }
 	
-	public void insertNew(String name, String address, String country, String phoneNo, String email)
+	public int insertCustomer(String name, String address, String country, String phoneNo, String email)
     {    
-		Supplier supObj = new Supplier();
-		supObj.setName(name);
-		supObj.setAddress(address);
-		supObj.setCountry(country);
-		supObj.setEmail(email);
-		supObj.setPhoneNo(phoneNo);
-  
+		Supplier supObj = new Supplier(name, address, country, phoneNo, email);
 		try{
 			DbConnection.startTransaction();
 			DBSupplier dbSup = new DBSupplier();
@@ -59,6 +48,12 @@ public class SuppliersCtr {
 		{
 			DbConnection.rollbackTransaction();
 		}
+		return supObj.getSupplierId();
     }
+	
+	public void removeSupplier(int supplierId) {
+		IFDBSuppliers dbSuppliers=new DBSupplier();
+		dbSuppliers.deleteSupplier(supplierId);
+	}
 
 }

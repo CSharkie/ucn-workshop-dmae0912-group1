@@ -18,49 +18,43 @@ public class ProductsCtr {
 	    return allProducts;
 	}
 	
-	public Product findByName(String name) {
+	public ArrayList<Product> findByName(String name) {
 		IFDBProducts dbProducts = new DBProduct();
 		return dbProducts.searchProductName(name, true);
 	}
 	
-	public Product findById(int id) {
+	public Product findById(int productId) {
 		IFDBProducts dbProducts = new DBProduct();
-		return dbProducts.searchProductId(id, true);
+		return dbProducts.searchProductId(productId, true);
 	}
 	
-	public int updateProduct(String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
+	public int updateProduct(int productId, String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
     {
 		IFDBProducts dbProducts = new DBProduct();
-		Product Product = new Product();
-        Product.setName(name);
-        Product.setCountryOfOrigin(countryOfOrigin);
-        Product.setMinStock(minStock);
-        Product.setPurchasePrice(purchasePrice);
-        Product.setRentPrice(rentPrice);
-        Product.setSalePrice(salePrice);
-        return  dbProducts.updateProduct(Product);
+		Product product = new Product(productId, name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock);
+        return dbProducts.updateProduct(product);
     }
 	
-	public void insertNew(String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
+	public int insertProduct(String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
     {    
-		Product ProdObj = new Product();
-		ProdObj.setName(name);
-		ProdObj.setCountryOfOrigin(countryOfOrigin);
-		ProdObj.setMinStock(minStock);
-		ProdObj.setPurchasePrice(purchasePrice);
-		ProdObj.setRentPrice(rentPrice);
-		ProdObj.setSalePrice(salePrice);
+		Product prodObj = new Product(name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock);
   
 		try{
 			DbConnection.startTransaction();
 			DBProduct dbProd = new DBProduct();
-			dbProd.insertProduct(ProdObj);
+			dbProd.insertProduct(prodObj);
 			DbConnection.commitTransaction();
 		}
 		catch(Exception e)
 		{
 			DbConnection.rollbackTransaction();
 		}
+		return prodObj.getProductId();
     }
+
+	public void removeProduct(int productId) {
+		IFDBProducts dbProducts = new DBProduct();
+		dbProducts.deleteProduct(productId);
+	}
 	
 }
