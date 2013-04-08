@@ -23,7 +23,7 @@ public class DBInvoice implements IFDBInvoice{
 		// get one Invoice having the No
 		public Invoice searchInvoiceByNo(int invoiceNo,
 				boolean retrieveAssociation) {
-			String wClause = "  Invoice no: = '" + invoiceNo + "'";
+			String wClause = " invoiceNo = '" + invoiceNo + "'";
 			return singleWhere(wClause, retrieveAssociation);
 		}
 
@@ -33,17 +33,14 @@ public class DBInvoice implements IFDBInvoice{
 																	// number
 			int nextId = getMax.getMaxId("Select max(invoiceNo) from Invoice");
 			nextId = nextId + 1;
+			inv.setInvoiceNo(nextId);
 			System.out.println("next ID = " + nextId);
 
 			int rc = -1;
-			String query = "INSERT INTO Invoice(invoiceNo, paymentDate, amount, price)  VALUES('"
-					+ nextId
+			String query = "INSERT INTO Invoice(invoiceNo, price)  VALUES('"
+					+ inv.getInvoiceNo()
 					+ "','"
-					+ inv.getPaymentDate()
-					+ "','"
-					+ inv.getAmount()
-					+ "','"
-					+ inv.getPrice() + "','";
+					+ inv.getPrice() + "');";
 					
 			System.out.println("insert : " + query);
 			try { // insert new Invoice 
@@ -65,7 +62,7 @@ public class DBInvoice implements IFDBInvoice{
 			int rc = -1;
 
 			String query = "UPDATE Invoice SET " + "paymentDate ='" + invObj.getPaymentDate()
-					+ "', " + "amount ='" + invObj.getAmount() + "', "
+					+ "', "
 					+ "price ='" + invObj.getPrice() 
 					+ "' " + " WHERE invoiceNo = '" + invObj.getInvoiceNo()
 					+ "'";
@@ -158,7 +155,7 @@ public class DBInvoice implements IFDBInvoice{
 
 		// method to build the query
 		private String buildQuery(String wClause) {
-			String query = "SELECT invoiceNo, paymentDate, amount, price, FROM Invoice";
+			String query = "SELECT invoiceNo, paymentDate, price FROM Invoice";
 
 			if (wClause.length() > 0)
 				query = query + " WHERE " + wClause;
@@ -172,8 +169,7 @@ public class DBInvoice implements IFDBInvoice{
 			try { // the columns from the table invoice are used
 				invObj.setInvoiceNo(results.getInt("invoiceNo"));
 				invObj.setPaymentDate(results.getDate("paymentDate"));
-				invObj.setAmount(results.getInt("amount"));
-				invObj.setPrice(results.getInt("zipCode"));
+				invObj.setPrice(results.getInt("price"));
 				
 			} catch (Exception e) {
 				System.out.println("error in building the Invoice object");

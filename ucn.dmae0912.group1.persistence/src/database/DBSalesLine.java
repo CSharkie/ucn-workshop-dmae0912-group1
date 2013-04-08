@@ -5,7 +5,7 @@ import model.Product;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DBSalesLine<Int> implements IFDBSalesLine{
+public class DBSalesLine implements IFDBSalesLine{
 	private Connection con;
 
 	/** Creates a new instance of DBSalesLine */
@@ -31,11 +31,16 @@ public class DBSalesLine<Int> implements IFDBSalesLine{
 																		// id
 				int nextId = getMax.getMaxId("Select max(salesLineId) from SalesLine");
 				nextId = nextId + 1;
+				saleLn.setSalesLineId(nextId);
 				System.out.println("next ID = " + nextId);
 
 				int rc = -1;
-				String query = "INSERT INTO SalesLine(salesLineId, amount)  VALUES('"
-						+ nextId
+				String query = "INSERT INTO SalesLine(salesLineId, SalesOrderId, ProductId, amount)  VALUES('"
+						+ saleLn.getSalesLineId()
+						+ "','"
+						+ saleLn.getProduct().getProductId()
+						+ "','"
+						+ saleLn.getOrder().getSalesOrderId()
 						+ "','"
 						+ saleLn.getAmount() + "','";
 						
@@ -53,32 +58,10 @@ public class DBSalesLine<Int> implements IFDBSalesLine{
 				return (rc);
 			}
 
-			@Override
-			public int updateSalesLine(SalesLine salesLn) {
-				SalesLine salesLnObj = salesLn;
+			public int delete(int salesLineId) {
 				int rc = -1;
 
-				String query = "UPDATE SalesLine SET " + "amount ='" + salesLnObj.getAmount() 
-						+ "' " + " WHERE SalesLineId = '" + salesLnObj.getSalesLineId()
-						+ "'";
-				System.out.println("Update query:" + query);
-				try { // update SalesLine
-					Statement stmt = con.createStatement();
-					stmt.setQueryTimeout(5);
-					rc = stmt.executeUpdate(query);
-
-					stmt.close();
-				}// end try
-				catch (Exception ex) {
-					System.out.println("Update exception in SalesLine db: " + ex);
-				}
-				return (rc);
-			}
-
-			public int delete(Int SalesLineId) {
-				int rc = -1;
-
-				String query = "DELETE FROM SalesLine WHERE No = '" + SalesLineId + "'";
+				String query = "DELETE FROM SalesLine WHERE No = '" + salesLineId + "'";
 				System.out.println(query);
 				try { // delete from SalesLine
 					Statement stmt = con.createStatement();

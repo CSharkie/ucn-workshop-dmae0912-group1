@@ -10,4 +10,5 @@ public interface IFDBSalesOrder {
 	public int insertSalesOrder(SalesOrder salesOrder) throws Exception;
 	public int updateSalesOrder(SalesOrder salesOrder);
 	public int deleteSalesOrder(int salesOrderId);
+	public int deleteOrder(int orderId);
 }

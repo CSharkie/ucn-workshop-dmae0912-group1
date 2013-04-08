@@ -7,20 +7,21 @@ import java.util.Iterator;
 public class Invoice {
 	int invoiceNo;
 	Date paymentDate;
-	int amount;
 	int price;
 	//SalesOrder saleOrder;
 	ArrayList<SalesOrder> salesOrders;
 	
-	public Invoice(int invoiceNo, Date paymentDate, int amount, int price) {
+	public Invoice(int invoiceNo, Date paymentDate, int price) {
 		this.invoiceNo = invoiceNo;
 		this.paymentDate = paymentDate;
-		this.amount = amount;
 		this.price = price;
 		salesOrders=new ArrayList<SalesOrder>();
 	}
 	public Invoice(){
 		
+	}
+	public Invoice(int invoiceNo) {
+		this.invoiceNo = invoiceNo;
 	}
 	public void addSalesOrder(SalesOrder salesOrder){
 		salesOrders.add(salesOrder);
@@ -61,14 +62,6 @@ public class Invoice {
 		this.paymentDate = paymentDate;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
 	public int getPrice() {
 		return price;
 	}
@@ -79,7 +72,6 @@ public class Invoice {
 	public void print(){
 		System.out.println("Invoice Number: " + invoiceNo);
 		System.out.println("Payment Date: " + paymentDate);
-		System.out.println("Amount: " + amount);
 		System.out.println("Price: " + price);
 	}
 
