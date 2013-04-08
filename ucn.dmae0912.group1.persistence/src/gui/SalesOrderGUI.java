@@ -96,7 +96,10 @@ public class SalesOrderGUI extends Composite {
 					id = Integer.parseInt(search_id.getText());
 				} catch (Exception ex) {
 					error = true;
-					// TODO: handle exception
+					MessageBox box = new MessageBox(getShell(), 0);
+					box.setText("Error");
+					box.setMessage("There was an error. Please try again");
+					box.open();
 				}
 				if (!error)
 					showSearchedSalesOrders(id);
@@ -468,7 +471,10 @@ public class SalesOrderGUI extends Composite {
 					quantity = Integer.parseInt(txt_Quantity.getText());
 				} catch (NumberFormatException ex) {
 					error = true;
-					// TODO exception
+					MessageBox box = new MessageBox(getShell(), 0);
+					box.setText("Error");
+					box.setMessage("There was an error. Please try again");
+					box.open();
 				}
 				if (!error) {
 					salesOrderCtr.addSalesLine(salesOrderId, productId,
@@ -493,7 +499,10 @@ public class SalesOrderGUI extends Composite {
 							table_1.getSelectionIndex()).getText(0));
 				} catch (NumberFormatException ex) {
 					error = true;
-					// TODO exception
+					MessageBox box = new MessageBox(getShell(), 0);
+					box.setText("Error");
+					box.setMessage("There was an error. Please try again");
+					box.open();
 				}
 				if (!error) {
 					salesOrderCtr.removeSalesLines(salesLineId);

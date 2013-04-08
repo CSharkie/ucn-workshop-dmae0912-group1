@@ -28,16 +28,16 @@ public class ProductsCtr {
 		return dbProducts.searchProductId(productId, true);
 	}
 	
-	public int updateProduct(int productId, String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
+	public int updateProduct(int productId, Supplier supplier, String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
     {
 		IFDBProducts dbProducts = new DBProduct();
-		Product product = new Product(productId, name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock);
+		Product product = new Product(productId, supplier, name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock);
         return dbProducts.updateProduct(product);
     }
 	
-	public int insertProduct(String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
+	public int insertProduct(String name, Supplier supplier, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock)
     {    
-		Product prodObj = new Product(name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock);
+		Product prodObj = new Product(name, supplier, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock);
   
 		try{
 			DbConnection.startTransaction();

@@ -9,6 +9,7 @@ public class Product {
 	double rentPrice;
 	String countryOfOrigin;
 	int minStock;
+	Supplier supplier;
 	
 	public Product(String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock) {
 		this.name = name;
@@ -23,18 +24,31 @@ public class Product {
 		
 	}
 
-	public Product(int productId, String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock) {
-		this.productId = productId;
+	public Product(String name, Supplier supplier, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock) {
 		this.name = name;
 		this.purchasePrice = purchasePrice;
 		this.salePrice = salePrice;
 		this.rentPrice = rentPrice;
 		this.countryOfOrigin = countryOfOrigin;
 		this.minStock = minStock;
+		this.supplier = supplier;
 	}
 
 	public Product(int id) {
 		this.productId = id;
+	}
+
+	public Product(int productId, Supplier supplier, String name, double purchasePrice,
+			double salePrice, double rentPrice, String countryOfOrigin,
+			int minStock) {
+		this.productId=productId;
+		this.supplier=supplier;
+		this.name = name;
+		this.purchasePrice = purchasePrice;
+		this.salePrice = salePrice;
+		this.rentPrice = rentPrice;
+		this.countryOfOrigin = countryOfOrigin;
+		this.minStock = minStock;
 	}
 
 	public int getProductId() {
@@ -91,6 +105,14 @@ public class Product {
 	
 	public void setMinStock(int minStock) {
 		this.minStock = minStock;
+	}
+	
+	public Supplier getSupplier() {
+		return supplier;
+	}
+	
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 
 }

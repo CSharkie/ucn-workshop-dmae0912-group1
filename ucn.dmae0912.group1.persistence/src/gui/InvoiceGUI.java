@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -58,11 +59,11 @@ public class InvoiceGUI extends Composite {
 		rl_composite_8.center = true;
 		composite_8.setLayout(rl_composite_8);
 
-		Label lbl_name = new Label(composite_8, SWT.NONE);
-		lbl_name.setText("Name:");
+		Label lbl_Id = new Label(composite_8, SWT.NONE);
+		lbl_Id.setText("ID:");
 
 		search_name = new Text(composite_8, SWT.BORDER);
-		search_name.setLayoutData(new RowData(77, SWT.DEFAULT));
+		search_name.setLayoutData(new RowData(99, SWT.DEFAULT));
 
 		Button btn_search = new Button(composite_8, SWT.NONE);
 		btn_search.addSelectionListener(new SelectionAdapter() {
@@ -74,7 +75,10 @@ public class InvoiceGUI extends Composite {
 					invoiceNo = Integer.parseInt(search_name.getText());
 				} catch (NumberFormatException ex) {
 					error = true;
-					// TODO exception
+					MessageBox box = new MessageBox(getShell(), 0);
+					box.setText("Error");
+					box.setMessage("There was an error. Please try again");
+					box.open();
 				}
 				if (!error)
 					showSearchedInvoices(invoiceNo);
@@ -136,7 +140,10 @@ public class InvoiceGUI extends Composite {
 					invoiceNo = Integer.parseInt(txt_no.getText());
 				} catch (NumberFormatException ex) {
 					error = true;
-					// TODO exception
+					MessageBox box = new MessageBox(getShell(), 0);
+					box.setText("Error");
+					box.setMessage("There was an error. Please try again");
+					box.open();
 				}
 				if (!error) {
 					salesOrderCtr.confirmInvoicePayment(invoiceNo, date);
