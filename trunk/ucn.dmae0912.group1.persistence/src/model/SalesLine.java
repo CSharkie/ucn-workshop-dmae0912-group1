@@ -3,13 +3,15 @@ package model;
 
 public class SalesLine {
 	
-	int amount;
-	int salesLineId;
+	private int amount;
+	private int salesLineId;
 	private Product prod;
+	private SalesOrder order;
 	
-	public SalesLine(int amount, int salesLineId){
+	public SalesLine(SalesOrder order, Product product, int amount){
 		this.amount=amount;
-		this.salesLineId=salesLineId;
+		this.prod = product;
+		this.order = order;
 	}
 
 	public SalesLine(){
@@ -44,5 +46,13 @@ public class SalesLine {
 	 public void print(){
 		System.out.println("Amount: " + amount);
 		System.out.println("Sales Line Id: " + salesLineId);
+	}
+
+	public SalesOrder getOrder() {
+		return order;
+	}
+
+	public void setOrder(SalesOrder order) {
+		this.order = order;
 	}
 }

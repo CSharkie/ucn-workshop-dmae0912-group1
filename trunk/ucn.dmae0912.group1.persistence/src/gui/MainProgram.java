@@ -76,7 +76,7 @@ public class MainProgram {
 		TabItem tbtmNewItem = new TabItem(tabFolder, SWT.NONE);
 		tbtmNewItem.setText("Orders");
 
-		OrderGUI orderGUI = new OrderGUI(tabFolder, SWT.NONE);
+		SalesOrderGUI orderGUI = new SalesOrderGUI(tabFolder, SWT.NONE);
 		tbtmNewItem.setControl(orderGUI);
 
 		TabItem tbtmInvoices = new TabItem(tabFolder, SWT.NONE);

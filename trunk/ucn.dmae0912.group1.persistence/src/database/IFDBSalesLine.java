@@ -12,8 +12,6 @@ public interface IFDBSalesLine {
 			public SalesLine searchSalesLineId(int saleslineId, boolean retrieveAssociation);
 		//insert a new SalesLine;
 			public int insertSalesLine(SalesLine salesLn) throws Exception;
-		//update information about an SalesLine
-			public int updateSalesLine(SalesLine salesLn);
 	}
 
 

@@ -9,19 +9,26 @@ public class SalesOrder {
 	
 	int salesOrderId;
 	Date date;
-	int amount;
 	Date deliveryDate;
 	Boolean deliveryStatus;   // false=under delivery(undelivered) || true=delivered
 	Customer customer;
 	Invoice invoice;
 	ArrayList<SalesLine> saleLines;
 	
-	public SalesOrder(int salesOrderId, Date date, int amount, Date deliveryDate, Boolean deliveryStatus){
+	public SalesOrder(int salesOrderId, Customer customer, Date date, Date deliveryDate){
 		this.salesOrderId=salesOrderId;
+		this.customer = customer;
 		this.date=date;
-		this.amount=amount;
 		this.deliveryDate=deliveryDate;
-		this.deliveryStatus=deliveryStatus;
+		this.deliveryStatus = false;
+		saleLines=new ArrayList<SalesLine>();
+	}
+	public SalesOrder(Customer customer, Date date, Date deliveryDate, Invoice invoice){
+		this.date=date;
+		this.customer = customer;
+		this.deliveryDate=deliveryDate;
+		this.invoice=invoice;
+		this.deliveryStatus = false;
 		saleLines=new ArrayList<SalesLine>();
 	}
 	public SalesOrder(){
@@ -80,14 +87,6 @@ public class SalesOrder {
 		this.date = date;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
@@ -106,7 +105,6 @@ public class SalesOrder {
 	public void print(){
 		System.out.println("Sales Order Id: " + salesOrderId);
 		System.out.println("Date: " + date);
-		System.out.println("Amount: " + amount);
 		System.out.println("Delivery Date: " + deliveryDate);
 		if(deliveryStatus=false)
 		System.out.println("Delivery Status: undelivered/under delivery");
