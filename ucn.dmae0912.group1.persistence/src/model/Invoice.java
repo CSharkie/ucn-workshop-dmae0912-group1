@@ -8,7 +8,6 @@ public class Invoice {
 	int invoiceNo;
 	Date paymentDate;
 	int price;
-	//SalesOrder saleOrder;
 	ArrayList<SalesOrder> salesOrders;
 	
 	public Invoice(int invoiceNo, Date paymentDate, int price) {

@@ -60,8 +60,10 @@ public class DBInvoice implements IFDBInvoice{
 		public int updateInvoice(Invoice inv) {
 			Invoice invObj = inv;
 			int rc = -1;
+			
+			java.sql.Date date = new java.sql.Date(invObj.getPaymentDate().getTime());
 
-			String query = "UPDATE Invoice SET " + "paymentDate ='" + invObj.getPaymentDate()
+			String query = "UPDATE Invoice SET " + "paymentDate ='" + date
 					+ "', "
 					+ "price ='" + invObj.getPrice() 
 					+ "' " + " WHERE invoiceNo = '" + invObj.getInvoiceNo()
@@ -175,57 +177,5 @@ public class DBInvoice implements IFDBInvoice{
 				System.out.println("error in building the Invoice object");
 			}
 			return invObj;
-		}	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		}
 }
