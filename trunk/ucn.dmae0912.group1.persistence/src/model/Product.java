@@ -24,6 +24,13 @@ public class Product {
 	}
 
 	public Product(int productId, String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock) {
+		this.productId = productId;
+		this.name = name;
+		this.purchasePrice = purchasePrice;
+		this.salePrice = salePrice;
+		this.rentPrice = rentPrice;
+		this.countryOfOrigin = countryOfOrigin;
+		this.minStock = minStock;
 	}
 
 	public Product(int id) {

@@ -431,6 +431,7 @@ public class ProductGUI extends Composite {
 		txt_SalePrice.setEditable(false);
 		txt_RentPrice.setEditable(false);
 		txt_CountryOfOrigin.setEditable(false);
+		txt_minStock.setEditable(false);
 
 		btn_create.setEnabled(true);
 		btn_edit.setEnabled(true);
