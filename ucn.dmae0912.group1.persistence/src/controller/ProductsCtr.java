@@ -56,5 +56,4 @@ public class ProductsCtr {
 		IFDBProducts dbProducts = new DBProduct();
 		dbProducts.deleteProduct(productId);
 	}
-	
 }

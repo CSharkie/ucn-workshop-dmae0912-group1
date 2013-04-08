@@ -55,12 +55,21 @@ public class SalesOrderGUI extends Composite {
 	private Text txt_ProdId;
 	private Text txt_Quantity;
 
+	private Button btn_deliveryStatus;
+
+	private Button btnAdd;
+
+	private Button btnDel;
+	
+	private SimpleDateFormat dateFormat;
+
 	public SalesOrderGUI(Composite parent, int style) {
 		super(parent, style);
 		this.setLayout(new BorderLayout(0, 0));
 
 		salesOrderCtr = new SalesOrderCtr();
-
+		
+		dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 		Composite composite_2 = new Composite(this, SWT.NONE);
 		composite_2.setLayoutData(BorderLayout.WEST);
 		composite_2.setLayout(new BorderLayout(0, 0));
@@ -114,7 +123,7 @@ public class SalesOrderGUI extends Composite {
 		TableColumn tblclmnCustomer = new TableColumn(table, SWT.NONE);
 		tblclmnCustomer.setWidth(100);
 		tblclmnCustomer.setText("Customer");
-		
+
 		TableColumn tblclmnDate = new TableColumn(table, SWT.NONE);
 		tblclmnDate.setWidth(100);
 		tblclmnDate.setText("Date");
@@ -147,9 +156,11 @@ public class SalesOrderGUI extends Composite {
 					create = true;
 					boolean error = false;
 					try {
-						date = new SimpleDateFormat("dd.MM.yyyy").parse(txt_date.getText());
+						date = new SimpleDateFormat("dd.MM.yyyy")
+								.parse(txt_date.getText());
 						customerId = Integer.parseInt(txt_customer.getText());
-						deliveryDate = new SimpleDateFormat("dd.MM.yyyy").parse(txt_deliveryDate.getText());
+						deliveryDate = new SimpleDateFormat("dd.MM.yyyy")
+								.parse(txt_deliveryDate.getText());
 					} catch (Exception exc) {
 						MessageBox box = new MessageBox(getShell(), 0);
 						box.setText("Error");
@@ -160,8 +171,9 @@ public class SalesOrderGUI extends Composite {
 					if (!error) {
 						boolean ok = true;
 						try {
-							salesOrderId = salesOrderCtr.insertSalesOrder(date, customerId, deliveryDate);
-									} catch (Exception ex1) {
+							salesOrderId = salesOrderCtr.insertSalesOrder(date,
+									customerId, deliveryDate);
+						} catch (Exception ex1) {
 							ok = false;
 							MessageBox box = new MessageBox(getShell(), 0);
 							box.setText("Error");
@@ -169,7 +181,7 @@ public class SalesOrderGUI extends Composite {
 							box.open();
 						}
 						if (ok) {
-							//showAllSalesOrders();
+							// showAllSalesOrders();
 							showSalesOrder(salesOrderId);
 						}
 					}
@@ -177,9 +189,11 @@ public class SalesOrderGUI extends Composite {
 				if (!create) {
 					boolean error = false;
 					try {
-						date = new SimpleDateFormat("dd.MM.yyyy").parse(txt_date.getText());
+						date = new SimpleDateFormat("dd.MM.yyyy")
+								.parse(txt_date.getText());
 						customerId = Integer.parseInt(txt_customer.getText());
-						deliveryDate = new SimpleDateFormat("dd.MM.yyyy").parse(txt_deliveryDate.getText());
+						deliveryDate = new SimpleDateFormat("dd.MM.yyyy")
+								.parse(txt_deliveryDate.getText());
 					} catch (Exception exc) {
 						MessageBox box = new MessageBox(getShell(), 0);
 						box.setText("Error");
@@ -190,7 +204,8 @@ public class SalesOrderGUI extends Composite {
 					if (!error) {
 						boolean ok = true;
 						try {
-							salesOrderCtr.updateSalesOrder(salesOrderId, customerId, date, deliveryDate);
+							salesOrderCtr.updateSalesOrder(salesOrderId,
+									customerId, date, deliveryDate);
 						} catch (Exception ex1) {
 							MessageBox box = new MessageBox(getShell(), 0);
 							box.setText("Error");
@@ -264,8 +279,14 @@ public class SalesOrderGUI extends Composite {
 				txt_customer.setEditable(true);
 				txt_date.setEditable(true);
 				txt_deliveryDate.setEditable(true);
-				txt_invoiceId.setEditable(true);
+				btn_deliveryStatus.setEnabled(true);
+				txt_invoiceId.setEditable(false);
 				search_id.setEditable(true);
+				
+				btnAdd.setEnabled(true);
+				btnDel.setEnabled(true);
+				txt_ProdId.setEditable(true);
+				txt_Quantity.setEditable(true);
 			}
 		});
 		btn_edit.setText("EDIT");
@@ -278,14 +299,19 @@ public class SalesOrderGUI extends Composite {
 				btn_edit.setEnabled(false);
 				btn_save.setEnabled(true);
 				btn_create.setEnabled(false);
-
+				btnAdd.setEnabled(false);
+				btnDel.setEnabled(false);
+				txt_ProdId.setEditable(false);
+				txt_Quantity.setEditable(false);
+				
 				resetFields();
 
 				txt_id.setEditable(false);
 				txt_customer.setEditable(true);
 				txt_date.setEditable(true);
 				txt_deliveryDate.setEditable(true);
-				txt_invoiceId.setEditable(true);
+				btn_deliveryStatus.setEnabled(false);
+				txt_invoiceId.setEditable(false);
 				search_id.setEditable(true);
 			}
 		});
@@ -317,8 +343,8 @@ public class SalesOrderGUI extends Composite {
 		lblCustomer.setText("Customer:");
 
 		txt_customer = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_customer = new GridData(SWT.LEFT, SWT.CENTER, true, false,
-				1, 1);
+		GridData gd_txt_customer = new GridData(SWT.LEFT, SWT.CENTER, true,
+				false, 1, 1);
 		gd_txt_customer.widthHint = 203;
 		txt_customer.setEditable(false);
 		txt_customer.setLayoutData(gd_txt_customer);
@@ -329,15 +355,15 @@ public class SalesOrderGUI extends Composite {
 		lblDate.setText("Date:");
 
 		txt_date = new Text(composite_7, SWT.BORDER);
-		GridData gd_txt_date = new GridData(SWT.LEFT, SWT.CENTER, true,
-				false, 1, 1);
+		GridData gd_txt_date = new GridData(SWT.LEFT, SWT.CENTER, true, false,
+				1, 1);
 		gd_txt_date.widthHint = 203;
 		txt_date.setEditable(false);
 		txt_date.setLayoutData(gd_txt_date);
 
 		Label lblDeliveryDate = new Label(composite_7, SWT.NONE);
-		lblDeliveryDate.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false, 1, 1));
+		lblDeliveryDate.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER,
+				false, false, 1, 1));
 		lblDeliveryDate.setText("DeliveryDate:");
 
 		txt_deliveryDate = new Text(composite_7, SWT.BORDER);
@@ -348,13 +374,15 @@ public class SalesOrderGUI extends Composite {
 		txt_deliveryDate.setLayoutData(gd_txt_deliveryDate);
 
 		Label lblDeliveryStatus = new Label(composite_7, SWT.NONE);
-		lblDeliveryStatus.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false, 1, 1));
+		lblDeliveryStatus.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER,
+				false, false, 1, 1));
 		lblDeliveryStatus.setText("Delivery Status:");
-		
-		Button btn_deliveryStatus = new Button(composite_7, SWT.CHECK);
-		btn_deliveryStatus.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+
+		btn_deliveryStatus = new Button(composite_7, SWT.CHECK);
+		btn_deliveryStatus.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER,
+				false, false, 1, 1));
 		btn_deliveryStatus.setText("Delivered");
+		btn_deliveryStatus.setEnabled(false);
 
 		Label lblInvoiceId = new Label(composite_7, SWT.NONE);
 		lblInvoiceId.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -367,93 +395,110 @@ public class SalesOrderGUI extends Composite {
 		gd_txt_invoiceId.widthHint = 203;
 		txt_invoiceId.setEditable(false);
 		txt_invoiceId.setLayoutData(gd_txt_invoiceId);
-		
+
 		Composite composite = new Composite(composite_6, SWT.NONE);
 		RowLayout rl_composite = new RowLayout(SWT.VERTICAL);
 		rl_composite.center = true;
 		composite.setLayout(rl_composite);
-		
+
 		Composite composite_10 = new Composite(composite, SWT.NONE);
 		composite_10.setLayoutData(new RowData(SWT.DEFAULT, 130));
 		composite_10.setLayout(new RowLayout(SWT.HORIZONTAL));
-		
-		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(composite_10, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+
+		ScrolledComposite scrolledComposite_1 = new ScrolledComposite(
+				composite_10, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite_1.setLayoutData(new RowData(SWT.DEFAULT, 106));
 		scrolledComposite_1.setExpandVertical(true);
 		scrolledComposite_1.setExpandHorizontal(true);
-		
-		table_1 = new Table(scrolledComposite_1, SWT.BORDER | SWT.FULL_SELECTION);
+
+		table_1 = new Table(scrolledComposite_1, SWT.BORDER
+				| SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
 		table_1.setItemCount(0);
 		table_1.setHeaderVisible(true);
-		
+
 		TableColumn tbl2clmnId = new TableColumn(table_1, SWT.NONE);
 		tbl2clmnId.setWidth(51);
 		tbl2clmnId.setText("ID");
-		
+
 		TableColumn tbl2clmnProduct = new TableColumn(table_1, SWT.NONE);
 		tbl2clmnProduct.setWidth(159);
 		tbl2clmnProduct.setText("Product");
-		
+
 		TableColumn tbl2clmnAmount = new TableColumn(table_1, SWT.NONE);
 		tbl2clmnAmount.setWidth(91);
 		tbl2clmnAmount.setText("Amount");
 		scrolledComposite_1.setContent(table_1);
-		scrolledComposite_1.setMinSize(table_1.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite_1.setMinSize(table_1.computeSize(SWT.DEFAULT,
+				SWT.DEFAULT));
 		scrolledComposite_1.setMinSize(new Point(321, 45));
-		
+
 		Composite composite_1 = new Composite(composite, SWT.NONE);
 		RowLayout rl_composite_1 = new RowLayout(SWT.HORIZONTAL);
 		rl_composite_1.center = true;
 		composite_1.setLayout(rl_composite_1);
-		
+
 		Label lblProdId = new Label(composite_1, SWT.NONE);
 		lblProdId.setAlignment(SWT.CENTER);
 		lblProdId.setText("Product ID:");
-		
+
 		txt_ProdId = new Text(composite_1, SWT.BORDER);
 		txt_ProdId.setLayoutData(new RowData(43, SWT.DEFAULT));
-		
+		txt_ProdId.setEditable(false);
+
 		Label lblQuantity = new Label(composite_1, SWT.NONE);
 		lblQuantity.setText("Quantity:");
 		lblQuantity.setAlignment(SWT.CENTER);
-		
+
 		txt_Quantity = new Text(composite_1, SWT.BORDER);
-		
-		Button btnAdd = new Button(composite_1, SWT.NONE);
+		txt_Quantity.setEditable(false);
+
+		btnAdd = new Button(composite_1, SWT.NONE);
+		btnAdd.setEnabled(false);
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int salesOrderId = 0;
 				int productId = 0;
 				int quantity = 0;
-				try
-				{
+				boolean error = false;
+				try {
 					salesOrderId = Integer.parseInt(txt_id.getText());
 					productId = Integer.parseInt(txt_ProdId.getText());
 					quantity = Integer.parseInt(txt_Quantity.getText());
+				} catch (NumberFormatException ex) {
+					error = true;
+					// TODO exception
 				}
-				catch(NumberFormatException ex)
-				{
-					
+				if (!error) {
+					salesOrderCtr.addSalesLine(salesOrderId, productId,
+							quantity);
+					showSalesLines(salesOrderId);
 				}
-				salesOrderCtr.addSalesLine(salesOrderId, productId, quantity);
 			}
 		});
 		btnAdd.setText("Add");
-		btn_create.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// TODO add salesline
-			}
-		});
-		
-		Button btnDel = new Button(composite_1, SWT.NONE);
+		btnDel = new Button(composite_1, SWT.NONE);
 		btnDel.setText("Delete");
+		btnDel.setEnabled(false);
 		btnDel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO delete salesline + pret
+				int salesLineId = 0;
+				int salesOrderId = 0;
+				boolean error = false;
+				try {
+					salesOrderId = Integer.parseInt(txt_id.getText());
+					salesLineId = Integer.parseInt(table_1.getItem(
+							table_1.getSelectionIndex()).getText(0));
+				} catch (NumberFormatException ex) {
+					error = true;
+					// TODO exception
+				}
+				if (!error) {
+					salesOrderCtr.removeSalesLines(salesLineId);
+					showSalesLines(salesOrderId);
+				}
 			}
 		});
 
@@ -477,7 +522,7 @@ public class SalesOrderGUI extends Composite {
 			TableItem item = new TableItem(table, SWT.NONE);
 			item.setText(0, String.valueOf(salesOrder.getSalesOrderId()));
 			item.setText(1, salesOrder.getCustomer().getName());
-			item.setText(2, salesOrder.getDate().toString());
+			item.setText(2, dateFormat.format(salesOrder.getDate()));
 		}
 	}
 
@@ -490,7 +535,7 @@ public class SalesOrderGUI extends Composite {
 			TableItem item = new TableItem(table, SWT.NONE);
 			item.setText(0, String.valueOf(salesOrder.getSalesOrderId()));
 			item.setText(1, salesOrder.getCustomer().getName());
-			item.setText(2, salesOrder.getDate().toString());
+			item.setText(2, dateFormat.format(salesOrder.getDate()));
 		}
 
 	}
@@ -499,17 +544,24 @@ public class SalesOrderGUI extends Composite {
 		SalesOrder salesOrder = salesOrderCtr.getSaleOrderById(id);
 		txt_id.setText(String.valueOf(salesOrder.getSalesOrderId()));
 
-		txt_customer.setText(salesOrder.getCustomer().getName());
-		txt_date.setText(salesOrder.getDate().toString());
-		txt_invoiceId.setText(String.valueOf(salesOrder.getInvoice().getInvoiceNo()));
-		txt_deliveryDate.setText(salesOrder.getDeliveryDate().toString());
+		txt_customer.setText(String.valueOf(salesOrder.getCustomer().getCustomerId()));
+		txt_date.setText(dateFormat.format(salesOrder.getDate()));
+		txt_invoiceId.setText(String.valueOf(salesOrder.getInvoice()
+				.getInvoiceNo()));
+		txt_deliveryDate.setText(dateFormat.format(salesOrder.getDeliveryDate()));
 
 		txt_id.setEditable(false);
 		txt_customer.setEditable(false);
 		txt_date.setEditable(false);
 		txt_invoiceId.setEditable(false);
 		txt_deliveryDate.setEditable(false);
+		btn_deliveryStatus.setEnabled(false);
 		
+		btnAdd.setEnabled(false);
+		btnDel.setEnabled(false);
+		txt_ProdId.setEditable(false);
+		txt_Quantity.setEditable(false);
+
 		showSalesLines(salesOrder.getSalesOrderId());
 
 		btn_create.setEnabled(true);
@@ -517,11 +569,12 @@ public class SalesOrderGUI extends Composite {
 		btn_delete.setEnabled(true);
 		btn_save.setEnabled(false);
 	}
-	
-	public void showSalesLines(int id)
-	{
+
+	public void showSalesLines(int id) {
 		table_1.clearAll();
 		table_1.setItemCount(0);
+		txt_ProdId.setText("");
+		txt_Quantity.setText("");
 		ArrayList<SalesLine> salesLines = salesOrderCtr.getAllSalesLines(id);
 		for (SalesLine salesLine : salesLines) {
 			TableItem item = new TableItem(table_1, SWT.NONE);
@@ -538,5 +591,8 @@ public class SalesOrderGUI extends Composite {
 		txt_deliveryDate.setText("");
 		txt_invoiceId.setText("");
 		search_id.setText("");
+		
+		table_1.clearAll();
+		table_1.setItemCount(0);
 	}
 }

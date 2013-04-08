@@ -62,7 +62,7 @@ public class InvoiceGUI extends Composite {
 		lbl_name.setText("Name:");
 
 		search_name = new Text(composite_8, SWT.BORDER);
-		search_name.setLayoutData(new RowData(116, SWT.DEFAULT));
+		search_name.setLayoutData(new RowData(77, SWT.DEFAULT));
 
 		Button btn_search = new Button(composite_8, SWT.NONE);
 		btn_search.addSelectionListener(new SelectionAdapter() {
@@ -81,6 +81,15 @@ public class InvoiceGUI extends Composite {
 			}
 		});
 		btn_search.setText("Search");
+		
+		Button btn_refresh = new Button(composite_8, SWT.NONE);
+		btn_refresh.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				showAllInvoices();
+			}
+		});
+		btn_refresh.setText("Refresh");
 
 		Composite composite_9 = new Composite(composite_2, SWT.NONE);
 		composite_9.setLayout(new FillLayout(SWT.HORIZONTAL));
