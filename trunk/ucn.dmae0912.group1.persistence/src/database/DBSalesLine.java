@@ -1,6 +1,7 @@
 package database;
 import model.SalesLine;
 import model.Product;
+import model.SalesOrder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,14 +15,15 @@ public class DBSalesLine implements IFDBSalesLine{
 	}
 	// Implements the methods from the interface
 			// get all SalesLines
-			public ArrayList<SalesLine> getAllSalesLines(boolean retrieveAssociation) {
-				return miscWhere("", retrieveAssociation);
+			public ArrayList<SalesLine> getAllSalesLinesBySalesOrderId(int id, boolean retrieveAssociation) {
+				String wClause = "  SalesOrderId = '" + id + "'";
+				return miscWhere(wClause, retrieveAssociation);
 			}
 
 			// get one SalesLine having the Id
 			public SalesLine searchSalesLineId(int salesLineId,
 					boolean retrieveAssociation) {
-				String wClause = "  SalesLine Id: = '" + salesLineId + "'";
+				String wClause = "  SalesLineId = '" + salesLineId + "'";
 				return singleWhere(wClause, retrieveAssociation);
 			}
 
@@ -42,7 +44,7 @@ public class DBSalesLine implements IFDBSalesLine{
 						+ "','"
 						+ saleLn.getOrder().getSalesOrderId()
 						+ "','"
-						+ saleLn.getAmount() + "','";
+						+ saleLn.getAmount() + "');";
 						
 				System.out.println("insert : " + query);
 				try { // insert new SalesLine 
@@ -98,10 +100,10 @@ public class DBSalesLine implements IFDBSalesLine{
 	                        Product prodObj = DBProdObj.searchProductId(salesLnObj.getProduct().getProductId(), false);
 	                        System.out.println("Product is selected ");
 	                        salesLnObj.setProduct(prodObj);
-							System.out.println("SalesLines are selected");
 						}
 						list.add(salesLnObj);
 					}// end while
+					System.out.println("SalesLines are selected");
 					stmt.close();
 
 				}// end try
@@ -146,7 +148,7 @@ public class DBSalesLine implements IFDBSalesLine{
 
 			// method to build the query
 			private String buildQuery(String wClause) {
-				String query = "SELECT SalesLineId, amount, FROM SalesLine";
+				String query = "SELECT SalesLineId, SalesOrderId, ProductId, amount FROM SalesLine";
 
 				if (wClause.length() > 0)
 					query = query + " WHERE " + wClause;
@@ -160,7 +162,8 @@ public class DBSalesLine implements IFDBSalesLine{
 				try { // the columns from the table SalesLine are used
 					salesLnObj.setSalesLineId(results.getInt("salesLineId"));
 					salesLnObj.setAmount(results.getInt("amount"));
-					
+					salesLnObj.setOrder(new SalesOrder(results.getInt("SalesOrderId")));
+					salesLnObj.setProduct(new Product(results.getInt("ProductId")));					
 				} catch (Exception e) {
 					System.out.println("error in building the SalesLine object");
 				}

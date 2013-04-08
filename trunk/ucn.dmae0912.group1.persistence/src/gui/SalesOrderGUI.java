@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import controller.SalesOrderCtr;
 
+import model.SalesLine;
 import model.SalesOrder;
 
 import org.eclipse.swt.layout.RowLayout;
@@ -387,20 +388,16 @@ public class SalesOrderGUI extends Composite {
 		table_1.setHeaderVisible(true);
 		
 		TableColumn tbl2clmnId = new TableColumn(table_1, SWT.NONE);
-		tbl2clmnId.setWidth(50);
+		tbl2clmnId.setWidth(51);
 		tbl2clmnId.setText("ID");
 		
 		TableColumn tbl2clmnProduct = new TableColumn(table_1, SWT.NONE);
-		tbl2clmnProduct.setWidth(100);
+		tbl2clmnProduct.setWidth(159);
 		tbl2clmnProduct.setText("Product");
 		
 		TableColumn tbl2clmnAmount = new TableColumn(table_1, SWT.NONE);
-		tbl2clmnAmount.setWidth(70);
+		tbl2clmnAmount.setWidth(91);
 		tbl2clmnAmount.setText("Amount");
-		
-		TableColumn tbl2clmnPrice = new TableColumn(table_1, SWT.NONE);
-		tbl2clmnPrice.setWidth(100);
-		tbl2clmnPrice.setText("Price");
 		scrolledComposite_1.setContent(table_1);
 		scrolledComposite_1.setMinSize(table_1.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		scrolledComposite_1.setMinSize(new Point(321, 45));
@@ -456,7 +453,7 @@ public class SalesOrderGUI extends Composite {
 		btnDel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO delete salesline
+				// TODO delete salesline + pret
 			}
 		});
 
@@ -482,7 +479,6 @@ public class SalesOrderGUI extends Composite {
 			item.setText(1, salesOrder.getCustomer().getName());
 			item.setText(2, salesOrder.getDate().toString());
 		}
-
 	}
 
 	private void showSearchedSalesOrders(int customerId) {
@@ -513,11 +509,26 @@ public class SalesOrderGUI extends Composite {
 		txt_date.setEditable(false);
 		txt_invoiceId.setEditable(false);
 		txt_deliveryDate.setEditable(false);
+		
+		showSalesLines(salesOrder.getSalesOrderId());
 
 		btn_create.setEnabled(true);
 		btn_edit.setEnabled(true);
 		btn_delete.setEnabled(true);
 		btn_save.setEnabled(false);
+	}
+	
+	public void showSalesLines(int id)
+	{
+		table_1.clearAll();
+		table_1.setItemCount(0);
+		ArrayList<SalesLine> salesLines = salesOrderCtr.getAllSalesLines(id);
+		for (SalesLine salesLine : salesLines) {
+			TableItem item = new TableItem(table_1, SWT.NONE);
+			item.setText(0, String.valueOf(salesLine.getSalesLineId()));
+			item.setText(1, salesLine.getProduct().getName());
+			item.setText(2, String.valueOf(salesLine.getAmount()));
+		}
 	}
 
 	public void resetFields() {

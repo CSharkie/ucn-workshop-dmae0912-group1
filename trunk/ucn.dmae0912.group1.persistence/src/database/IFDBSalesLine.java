@@ -7,7 +7,7 @@ import model.SalesLine;
 public interface IFDBSalesLine {
 	
 		// get all SalesLines
-			public ArrayList<SalesLine> getAllSalesLines(boolean retrieveAssociation);
+			public ArrayList<SalesLine> getAllSalesLinesBySalesOrderId(int id, boolean retrieveAssociation);
 		// get one SalesLine by SalesLineId;
 			public SalesLine searchSalesLineId(int saleslineId, boolean retrieveAssociation);
 		//insert a new SalesLine;

@@ -90,4 +90,27 @@ public class SalesOrderCtr {
 				DbConnection.rollbackTransaction();
 			}
 		}
+		public ArrayList<Invoice> getAllInvoices() {
+			IFDBInvoice dbInvoice=new DBInvoice();
+			ArrayList<Invoice> allInvoices=new ArrayList<Invoice>();
+			allInvoices=dbInvoice.getAllInvoices(false);
+			return allInvoices;
+		}
+		public Invoice getInvoiceByNo(int invoiceNo) {
+			IFDBInvoice dbInvoice=new DBInvoice();			
+			Invoice invoice = dbInvoice.searchInvoiceByNo(invoiceNo, false);
+			return invoice;
+		}
+		public int confirmInvoicePayment(int invoiceNo, Date date) {
+			IFDBInvoice dbInvoice=new DBInvoice();
+			Invoice invoice=new Invoice(invoiceNo);
+			invoice.setPaymentDate(date);
+			return dbInvoice.updateInvoice(invoice);
+		}
+		public ArrayList<SalesLine> getAllSalesLines(int id) {
+			IFDBSalesLine dbSalesLine=new DBSalesLine();
+			ArrayList<SalesLine> allSalesLines=new ArrayList<SalesLine>();
+			allSalesLines=dbSalesLine.getAllSalesLinesBySalesOrderId(id, true);
+			return allSalesLines;
+		}
 }

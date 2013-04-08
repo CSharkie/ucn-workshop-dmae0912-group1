@@ -34,6 +34,9 @@ public class SalesOrder {
 	public SalesOrder(){
 		
 	}
+	public SalesOrder(int id) {
+		this.salesOrderId = id;
+	}
 	public void setCustomer(Customer customer){
 		this.customer=customer;
 	}
