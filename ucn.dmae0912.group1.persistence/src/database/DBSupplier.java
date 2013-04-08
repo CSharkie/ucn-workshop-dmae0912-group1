@@ -93,7 +93,7 @@ public class DBSupplier implements IFDBSuppliers {
 	 	 	stmt.close();
 		}//slut try
 	 	catch(Exception ex){
-	 	 	System.out.println("Update exception in Supplier db: "+ex);
+	 	 	System.out.println("Update exception in Supplier db: " + ex);
 	  	}
 		return(rs);
 		}

@@ -22,7 +22,12 @@ public class Supplier {
 	}
 	
 	public Supplier(int supplierId, String name, String address, String country, String phoneNo, String email) {
-		
+		this.supplierId = supplierId;
+		this.name = name;
+		this.address = address;
+		this.country = country;
+		this.phoneNo = phoneNo;
+		this.email = email;
 	}
 
 	public int getSupplierId() {

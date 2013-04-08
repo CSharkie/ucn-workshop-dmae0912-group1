@@ -34,7 +34,7 @@ public class DBProduct implements IFDBProducts {
         
         prod.setProductId(nextId);
        int rp = -1;
-	   String query="INSERT INTO Product(productId, name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock)  VALUES('"
+	   String query="INSERT INTO Product(productId, name, purchasePrice, salePrice, rentPrice, minStock, countryOfOrigin, productType)  VALUES('"
 			   + prod.getProductId()
 			   + "','" 
 			   + prod.getName() 
@@ -48,6 +48,8 @@ public class DBProduct implements IFDBProducts {
 			   + prod.getMinStock() 
 			   + "','" 
 			   + prod.getCountryOfOrigin() 
+			   + "','" 
+			   + 1 // This is the product type a default number until future implement of the function in the GUI
 			   + "');" ;
 
        System.out.println("insert : " + query);
