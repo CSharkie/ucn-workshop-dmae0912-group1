@@ -11,6 +11,8 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class MainProgram {
 
@@ -113,6 +115,12 @@ public class MainProgram {
 		mntmFile.setMenu(menu_1);
 
 		MenuItem mntmClose = new MenuItem(menu_1, SWT.NONE);
+		mntmClose.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.exit(0);
+			}
+		});
 		mntmClose.setText("Close");
 
 		MenuItem mntmHe = new MenuItem(menu, SWT.NONE);
