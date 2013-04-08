@@ -7,7 +7,7 @@ import java.util.Iterator;
 public class Invoice {
 	int invoiceNo;
 	Date paymentDate;
-	int price;
+	double price;
 	ArrayList<SalesOrder> salesOrders;
 	
 	public Invoice(int invoiceNo, Date paymentDate, int price) {
@@ -61,11 +61,11 @@ public class Invoice {
 		this.paymentDate = paymentDate;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public void print(){

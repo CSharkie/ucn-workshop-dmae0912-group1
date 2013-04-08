@@ -75,21 +75,7 @@ public class SalesOrderCtr {
 			}
 			return invoice;
 		}
-		public void addSalesLine(int salesOrderId, int productId, int quantity) {
-			SalesOrder salesOrder = getSaleOrderById(salesOrderId);
-			Product product = prodCtr.findById(productId);
-			SalesLine salesLineObj=new SalesLine(salesOrder, product, quantity);
-			try{
-				DbConnection.startTransaction();
-				DBSalesLine dbsalesLine = new DBSalesLine();
-				dbsalesLine.insertSalesLine(salesLineObj);
-				DbConnection.commitTransaction();
-			}
-			catch(Exception e)
-			{
-				DbConnection.rollbackTransaction();
-			}
-		}
+		
 		public ArrayList<Invoice> getAllInvoices() {
 			IFDBInvoice dbInvoice=new DBInvoice();
 			ArrayList<Invoice> allInvoices=new ArrayList<Invoice>();
@@ -103,7 +89,7 @@ public class SalesOrderCtr {
 		}
 		public int confirmInvoicePayment(int invoiceNo, Date date) {
 			IFDBInvoice dbInvoice=new DBInvoice();
-			Invoice invoice=new Invoice(invoiceNo);
+			Invoice invoice=dbInvoice.searchInvoiceByNo(invoiceNo, false);
 			invoice.setPaymentDate(date);
 			return dbInvoice.updateInvoice(invoice);
 		}
@@ -112,5 +98,56 @@ public class SalesOrderCtr {
 			ArrayList<SalesLine> allSalesLines=new ArrayList<SalesLine>();
 			allSalesLines=dbSalesLine.getAllSalesLinesBySalesOrderId(id, true);
 			return allSalesLines;
+		}
+		public void addSalesLine(int salesOrderId, int productId, int quantity) {
+			SalesOrder salesOrder = getSaleOrderById(salesOrderId);
+			Product product = prodCtr.findById(productId);
+			SalesLine salesLineObj=new SalesLine(salesOrder, product, quantity);
+			boolean error = false;
+			try{
+				DbConnection.startTransaction();
+				DBSalesLine dbsalesLine = new DBSalesLine();
+				dbsalesLine.insertSalesLine(salesLineObj);
+				DbConnection.commitTransaction();
+			}
+			catch(Exception e)
+			{
+				error = true;
+				DbConnection.rollbackTransaction();
+			}
+			if(!error) 
+			{
+				IFDBInvoice dbInvoice=new DBInvoice();
+				Invoice invoice  = salesOrder.getInvoice();
+				double price = product.getSalePrice() * quantity;
+				invoice.setPrice(invoice.getPrice() + price);
+				dbInvoice.updateInvoice(invoice);
+			}
+		}		
+		public void removeSalesLines(int salesLineId) {
+			IFDBSalesLine dbSalesLine=new DBSalesLine();
+			SalesLine salesLine = dbSalesLine.searchSalesLineId(salesLineId, true);
+			SalesOrder salesOrder = salesLine.getOrder();
+			Invoice invoice = salesOrder.getInvoice();
+			Product product = salesLine.getProduct();
+			boolean error = false;
+			try{
+				DbConnection.startTransaction();
+				DBSalesLine dbsalesLine = new DBSalesLine();
+				dbsalesLine.delete(salesLineId);
+				DbConnection.commitTransaction();
+			}
+			catch(Exception e)
+			{
+				error = true;
+				DbConnection.rollbackTransaction();
+			}
+			if(!error) 
+			{
+				IFDBInvoice dbInvoice=new DBInvoice();
+				double price = product.getSalePrice() * salesLine.getAmount();
+				invoice.setPrice(invoice.getPrice() - price);
+				dbInvoice.updateInvoice(invoice);
+			}
 		}
 }

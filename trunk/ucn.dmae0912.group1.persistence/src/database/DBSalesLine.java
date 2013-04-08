@@ -40,9 +40,9 @@ public class DBSalesLine implements IFDBSalesLine{
 				String query = "INSERT INTO SalesLine(salesLineId, SalesOrderId, ProductId, amount)  VALUES('"
 						+ saleLn.getSalesLineId()
 						+ "','"
-						+ saleLn.getProduct().getProductId()
-						+ "','"
 						+ saleLn.getOrder().getSalesOrderId()
+						+ "','"
+						+ saleLn.getProduct().getProductId()
 						+ "','"
 						+ saleLn.getAmount() + "');";
 						
@@ -63,7 +63,7 @@ public class DBSalesLine implements IFDBSalesLine{
 			public int delete(int salesLineId) {
 				int rc = -1;
 
-				String query = "DELETE FROM SalesLine WHERE No = '" + salesLineId + "'";
+				String query = "DELETE FROM SalesLine WHERE SalesLineId = '" + salesLineId + "'";
 				System.out.println(query);
 				try { // delete from SalesLine
 					Statement stmt = con.createStatement();
@@ -100,6 +100,10 @@ public class DBSalesLine implements IFDBSalesLine{
 	                        Product prodObj = DBProdObj.searchProductId(salesLnObj.getProduct().getProductId(), false);
 	                        System.out.println("Product is selected ");
 	                        salesLnObj.setProduct(prodObj);
+	                        IFDBSalesOrder DBSalesOrderObj = new DBSalesOrder();
+	                        SalesOrder salesOrderObj = DBSalesOrderObj.getSaleOrderById(salesLnObj.getOrder().getSalesOrderId(), false);
+	                        System.out.println("SalesOrder is selected ");
+	                        salesLnObj.setOrder(salesOrderObj);
 						}
 						list.add(salesLnObj);
 					}// end while
@@ -134,6 +138,10 @@ public class DBSalesLine implements IFDBSalesLine{
 	                        Product prodObj = DBProdObj.searchProductId(salesLnObj.getProduct().getProductId(), false);
 	                        salesLnObj.setProduct(prodObj);
 	                        System.out.println("Product is selected ");
+	                        IFDBSalesOrder DBSalesOrderObj = new DBSalesOrder();
+	                        SalesOrder salesOrderObj = DBSalesOrderObj.getSaleOrderById(salesLnObj.getOrder().getSalesOrderId(), false);
+	                        salesLnObj.setOrder(salesOrderObj);
+	                        System.out.println("SalesOrder is selected ");
 						}
 						
 					} else { // no SalesLine was found
