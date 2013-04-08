@@ -21,6 +21,10 @@ public class Supplier {
 		
 	}
 	
+	public Supplier(int supplierId, String name, String address, String country, String phoneNo, String email) {
+		
+	}
+
 	public int getSupplierId() {
 		return supplierId;
 	}

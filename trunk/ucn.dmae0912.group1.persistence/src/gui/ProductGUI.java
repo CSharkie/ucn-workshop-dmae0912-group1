@@ -1,5 +1,10 @@
 package gui;
 
+import controller.ProductsCtr;
+import model.Product;
+
+import java.util.ArrayList;
+
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -10,8 +15,12 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import swing2swt.layout.FlowLayout;
@@ -19,6 +28,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 
 public class ProductGUI extends Composite {
+	
+	ProductsCtr prodCtr;
 	
 	// Tables
 	private Table table;
@@ -30,11 +41,19 @@ public class ProductGUI extends Composite {
 	private Text txt_SalePrice;
 	private Text txt_RentPrice;
 	private Text txt_CountryOfOrigin;
+	private Text txt_minStock;
 	private Text search_name;
 
+	private Button btn_delete;
+	private Button btn_save;
+	private Button btn_edit;
+	private Button btn_create;
+	
 	public ProductGUI(Composite parent, int style) {
 		super(parent, style);
 		this.setLayout(new BorderLayout(0, 0));
+		
+		prodCtr = new ProductsCtr();
 
 		Composite composite_2 = new Composite(this, SWT.NONE);
 		composite_2.setLayoutData(BorderLayout.WEST);
@@ -53,6 +72,13 @@ public class ProductGUI extends Composite {
 		search_name.setLayoutData(new RowData(116, SWT.DEFAULT));
 
 		Button btn_search = new Button(composite_8, SWT.NONE);
+		btn_search.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String name = search_name.getText();
+				showSearchedProducts(name);
+			}
+		});
 		btn_search.setText("Search");
 
 		Composite composite_9 = new Composite(composite_2, SWT.NONE);
@@ -88,18 +114,123 @@ public class ProductGUI extends Composite {
 		Composite composite_5 = new Composite(composite_4, SWT.NONE);
 		composite_5.setLayout(new RowLayout(SWT.HORIZONTAL));
 
-		final Button btn_delete = new Button(composite_5, SWT.CENTER);
-		final Button btn_save = new Button(composite_5, SWT.CENTER);
-		final Button btn_edit = new Button(composite_5, SWT.CENTER);
-		final Button btn_create = new Button(composite_5, SWT.CENTER);
+		btn_delete = new Button(composite_5, SWT.CENTER);
+		btn_save = new Button(composite_5, SWT.CENTER);
+		btn_save.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				boolean create = false;
+				int productId = 0;
+				String name = null;
+				double PurchasePrice = 0.0;
+				double SalePrice = 0.0;
+				double RentPrice = 0.0;
+				String CountryOfOrigin = null;
+				int minStock = 0;
+				try {
+					productId = Integer.parseInt(txt_id.getText());
+				} catch (NumberFormatException ex) {
+					create = true;
+					boolean error = false;
+					try {
+						name = txt_name.getText();
+						PurchasePrice = Double.parseDouble(txt_PurchasePrice.getText());
+						SalePrice = Double.parseDouble(txt_SalePrice.getText());
+						RentPrice = Double.parseDouble(txt_RentPrice.getText());
+						CountryOfOrigin = txt_CountryOfOrigin.getText();
+						minStock = Integer.parseInt(txt_minStock.getText());
+					} catch (Exception exc) {
+						MessageBox box = new MessageBox(getShell(), 0);
+						box.setText("Error");
+						box.setMessage("There was an error. Please try again");
+						box.open();
+						error = true;
+					}
+					if (!error) {
+						boolean ok = true;
+						try {
+							productId = prodCtr.insertProduct(name, PurchasePrice, SalePrice, RentPrice, CountryOfOrigin, minStock);
+						} catch (Exception ex1) {
+							ok = false;
+							MessageBox box = new MessageBox(getShell(), 0);
+							box.setText("Error");
+							box.setMessage("There was an error. Please try again");
+							box.open();
+						}
+						if (ok) {
+							showAllProducts();
+							showProduct(productId);
+						}
+					}
+				}
+				if (!create) {
+					boolean error = false;
+					try {
+						name = txt_name.getText();
+						PurchasePrice = Double.parseDouble(txt_PurchasePrice.getText());
+						SalePrice = Double.parseDouble(txt_SalePrice.getText());
+						RentPrice = Double.parseDouble(txt_RentPrice.getText());
+						CountryOfOrigin = txt_CountryOfOrigin.getText();
+						minStock = Integer.parseInt(txt_minStock.getText());
+					} catch (Exception exc) {
+						MessageBox box = new MessageBox(getShell(), 0);
+						box.setText("Error");
+						box.setMessage("There was an error. Please try again");
+						box.open();
+						error = true;
+					}
+					if (!error) {
+						boolean ok = true;
+						try {
+							prodCtr.updateProduct(productId, name, PurchasePrice, SalePrice, RentPrice, CountryOfOrigin, minStock);
+						} catch (Exception ex1) {
+							MessageBox box = new MessageBox(getShell(), 0);
+							box.setText("Error");
+							box.setMessage("There was an error. Please try again");
+							box.open();
+							ok = false;
+						}
+						if (ok) {
+							showAllProducts();
+							showProduct(productId);
+						}
+					}
+
+				}
+			}
+		});
+		btn_edit = new Button(composite_5, SWT.CENTER);
+		btn_create = new Button(composite_5, SWT.CENTER);
 		
 		btn_delete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				btn_delete.setEnabled(true);
-				btn_edit.setEnabled(false);
-				btn_save.setEnabled(false);
-				btn_create.setEnabled(false);
+				int productId = 0;
+				boolean error = false;
+				try {
+					productId = Integer.parseInt(txt_id.getText());
+				} catch (NumberFormatException ex) {
+					error = true;
+					MessageBox box = new MessageBox(getShell(), 0);
+					box.setText("Error");
+					box.setMessage("There was an error. Please try again");
+					box.open();
+				}
+				if (!error) {
+					try {
+						prodCtr.removeProduct(productId);
+					} catch (Exception ex) {
+						MessageBox box = new MessageBox(getShell(), 0);
+						box.setText("Error");
+						box.setMessage("There was an error. Please try again");
+						box.open();
+					}
+					showAllProducts();
+					resetFields();
+					btn_delete.setEnabled(false);
+					btn_edit.setEnabled(false);
+					btn_save.setEnabled(false);
+					btn_create.setEnabled(true);
+				}
 			}
 		});
 		btn_delete.setLayoutData(new RowData(75, 50));
@@ -113,6 +244,7 @@ public class ProductGUI extends Composite {
 
 		
 		btn_edit.setLayoutData(new RowData(75, 50));
+		btn_edit.setEnabled(false);
 		btn_edit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -121,12 +253,13 @@ public class ProductGUI extends Composite {
 				btn_save.setEnabled(true);
 				btn_create.setEnabled(false);
 				
-				txt_id.setEditable(true);
+				txt_id.setEditable(false);
 				txt_name.setEditable(true);
 				txt_PurchasePrice.setEditable(true);
 				txt_SalePrice.setEditable(true);
 				txt_RentPrice.setEditable(true);
 				txt_CountryOfOrigin.setEditable(true);
+				txt_minStock.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -141,13 +274,16 @@ public class ProductGUI extends Composite {
 				btn_edit.setEnabled(false);
 				btn_save.setEnabled(true);
 				btn_create.setEnabled(false);
+
+				resetFields();
 				
-				txt_id.setEditable(true);
+				txt_id.setEditable(false);
 				txt_name.setEditable(true);
 				txt_PurchasePrice.setEditable(true);
 				txt_SalePrice.setEditable(true);
 				txt_RentPrice.setEditable(true);
 				txt_CountryOfOrigin.setEditable(true);
+				txt_minStock.setEditable(true);
 				search_name.setEditable(true);
 			}
 		});
@@ -232,7 +368,85 @@ public class ProductGUI extends Composite {
 		gd_txt_countryOfOrigin.widthHint = 203;
 		txt_CountryOfOrigin.setEditable(false);
 		txt_CountryOfOrigin.setLayoutData(gd_txt_countryOfOrigin);
+		
+		Label lblMinStock = new Label(composite_7, SWT.NONE);
+		lblMinStock.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+				false, 1, 1));
+		lblMinStock.setText("Min Stock:");
 
+		txt_minStock = new Text(composite_7, SWT.BORDER);
+		GridData gd_txt_minStock = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1,
+				1);
+		gd_txt_minStock.widthHint = 203;
+		txt_minStock.setEditable(false);
+		txt_minStock.setLayoutData(gd_txt_minStock);
+
+		table.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				int productId = Integer.parseInt(table.getItem(
+						table.getSelectionIndex()).getText(0));
+				showProduct(productId);
+			}
+		});
+
+		showAllProducts();
 		
 	}
+	
+	private void showAllProducts() {
+		table.clearAll();
+		table.setItemCount(0);
+		ArrayList<Product> products = prodCtr.findAllProducts();
+		for (Product product : products) {
+			TableItem item = new TableItem(table, SWT.NONE);
+			item.setText(0, String.valueOf(product.getProductId()));
+			item.setText(1, product.getName());
+		}
+	}
+
+	private void showSearchedProducts(String name) {
+		table.clearAll();
+		table.setItemCount(0);
+		ArrayList<Product> products = prodCtr.findByName(name);
+		for (Product product : products) {
+			TableItem item = new TableItem(table, SWT.NONE);
+			item.setText(0, String.valueOf(product.getProductId()));
+			item.setText(1, product.getName());
+		}
+
+	}
+
+	private void showProduct(int productId) {
+		Product product = prodCtr.findById(productId);
+		txt_id.setText(String.valueOf(product.getProductId()));
+		txt_name.setText(product.getName());
+		txt_PurchasePrice.setText(String.valueOf(product.getPurchasePrice()));
+		txt_SalePrice.setText(String.valueOf(product.getSalePrice()));
+		txt_RentPrice.setText(String.valueOf(product.getRentPrice()));
+		txt_CountryOfOrigin.setText(product.getCountryOfOrigin());
+
+		txt_id.setEditable(false);
+		txt_name.setEditable(false);
+		txt_PurchasePrice.setEditable(false);
+		txt_SalePrice.setEditable(false);
+		txt_RentPrice.setEditable(false);
+		txt_CountryOfOrigin.setEditable(false);
+
+		btn_create.setEnabled(true);
+		btn_edit.setEnabled(true);
+		btn_delete.setEnabled(true);
+		btn_save.setEnabled(false);
+	}
+
+	public void resetFields() {
+		txt_id.setText("");
+		txt_name.setText("");
+		txt_PurchasePrice.setText("");
+		txt_SalePrice.setText("");
+		txt_RentPrice.setText("");
+		txt_CountryOfOrigin.setText("");
+		txt_minStock.setText("");
+		search_name.setText("");
+	}
+	
 }

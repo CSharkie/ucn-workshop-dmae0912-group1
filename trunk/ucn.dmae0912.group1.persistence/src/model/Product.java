@@ -23,6 +23,9 @@ public class Product {
 		
 	}
 
+	public Product(int productId, String name, double purchasePrice, double salePrice, double rentPrice, String countryOfOrigin, int minStock) {
+	}
+
 	public int getProductId() {
 		return productId;
 	}

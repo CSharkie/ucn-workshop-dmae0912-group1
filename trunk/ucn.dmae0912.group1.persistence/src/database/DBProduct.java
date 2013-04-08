@@ -17,33 +17,41 @@ public class DBProduct implements IFDBProducts {
 	}
 
 	public Product searchProductId(int productId, boolean retreiveAssociation) {
-		String wClause = "  Product ID: = '" + productId + "'";
+		String wClause = " ProductId = '" + productId + "'";
         return singleWhere(wClause, retreiveAssociation);
 	}
 
-	public Product searchProductName(String name, boolean retriveAssociation) {
-		String wClause = "Name: " + name + ",";
+	public ArrayList<Product> searchProductName(String name, boolean retriveAssociation) {
+		String wClause = "Name LIKE '%" + name + "%'";
         System.out.println("Product " + wClause);
-        return singleWhere(wClause, retriveAssociation);
+        return miscWhere(wClause, retriveAssociation);
 	}
 
 	public int insertProduct(Product prod) throws Exception {
 		int nextId = getMax.getMaxId("Select max(productId) from Product");
         nextId = nextId + 1;
         System.out.println("next ID = " +  nextId);
-  
+        
+        prod.setProductId(nextId);
        int rp = -1;
-	   String query="INSERT INTO Product(productId, name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock)  VALUES('"+
-			nextId + "','" +
-			prod.getName() + "','" +
-			prod.getPurchasePrice() + "','" +
-			prod.getSalePrice() + "','" +
-			prod.getRentPrice() + "','" +
-			prod.getMinStock() + "','" +
-			prod.getCountryOfOrigin() + "','" ;
+	   String query="INSERT INTO Product(productId, name, purchasePrice, salePrice, rentPrice, countryOfOrigin, minStock)  VALUES('"
+			   + prod.getProductId()
+			   + "','" 
+			   + prod.getName() 
+			   + "','" 
+			   + prod.getPurchasePrice() 
+			   + "','" 
+			   + prod.getSalePrice() 
+			   + "','" 
+			   + prod.getRentPrice() 
+			   + "','" 
+			   + prod.getMinStock() 
+			   + "','" 
+			   + prod.getCountryOfOrigin() 
+			   + "');" ;
 
        System.out.println("insert : " + query);
-      try{ // insert new Product +  dependent
+      try{ // insert new Product
           Statement stmt = con.createStatement();
           stmt.setQueryTimeout(5);
      	  rp = stmt.executeUpdate(query);
@@ -60,14 +68,28 @@ public class DBProduct implements IFDBProducts {
 		Product prodObj  = prod;
 		int rp=-1;
 	
-		String query="UPDATE Product SET "+
-		 	  "name ='"+ prodObj.getName()+"', "+
-		 	  "purchasePrice ='"+ prodObj.getPurchasePrice() + "', " +
-	                      "salePrice ='"+ prodObj.getSalePrice() + "', " +
-	                      "rentPrice ='"+ prodObj.getRentPrice() + ", " +
-	                      "minStock ='" + prodObj.getMinStock() + "' " +
-	                      "countryOfOrigin ='" + prodObj.getCountryOfOrigin() + "'" +
-		          " WHERE productId = '"+ prodObj.getProductId() + "'";
+		String query="UPDATE Product SET " 
+		+ "name ='" 
+		+ prodObj.getName() 
+		+ "', " 
+		+ "purchasePrice ='" 
+		+ prodObj.getPurchasePrice() 
+		+ "', " 
+		+ "salePrice ='" 
+		+ prodObj.getSalePrice() 
+		+ "', " 
+		+ "rentPrice ='" 
+		+ prodObj.getRentPrice() 
+		+ "', " 
+		+  "minStock ='" 
+		+ prodObj.getMinStock() 
+		+ "', " 
+		+ "countryOfOrigin ='" 
+		+ prodObj.getCountryOfOrigin() 
+		+ "'" 
+		+ " WHERE productId = '" 
+		+ prodObj.getProductId() 
+		+ "'";
 	            System.out.println("Update query:" + query);
 			try{ // update Product
 	 		Statement stmt = con.createStatement();
@@ -82,11 +104,11 @@ public class DBProduct implements IFDBProducts {
 		return(rp);
 		}
 	
-	public int delete(String productId)
+	public int deleteProduct(int productId)
 	{
                int rp=-1;
 	  
-	  	String query="DELETE FROM Product WHERE ID = '" +
+	  	String query="DELETE FROM Product WHERE productId = '" +
 	  			productId + "'";
                 System.out.println(query);
 	  	try{ // delete from Product
@@ -173,8 +195,8 @@ public class DBProduct implements IFDBProducts {
                 prodObj.setProductId(results.getInt("productId"));
                 prodObj.setName(results.getString("name"));
                 prodObj.setPurchasePrice(results.getDouble("purchasePrice"));
-                prodObj.setSalePrice(results.getInt("salePrice"));
-                prodObj.setRentPrice(results.getInt("rentPrice"));
+                prodObj.setSalePrice(results.getDouble("salePrice"));
+                prodObj.setRentPrice(results.getDouble("rentPrice"));
                 prodObj.setCountryOfOrigin(results.getString("countryOfOrigin"));
                 prodObj.setMinStock(results.getInt("minStock"));
           }
