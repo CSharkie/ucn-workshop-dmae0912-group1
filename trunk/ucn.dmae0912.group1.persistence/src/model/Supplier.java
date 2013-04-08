@@ -30,6 +30,10 @@ public class Supplier {
 		this.email = email;
 	}
 
+	public Supplier(int supplierId) {
+		this.supplierId = supplierId;
+	}
+
 	public int getSupplierId() {
 		return supplierId;
 	}

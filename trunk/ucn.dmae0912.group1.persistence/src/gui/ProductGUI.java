@@ -1,7 +1,9 @@
 package gui;
 
 import controller.ProductsCtr;
+import controller.SuppliersCtr;
 import model.Product;
+import model.Supplier;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ import org.eclipse.swt.layout.GridData;
 public class ProductGUI extends Composite {
 	
 	ProductsCtr prodCtr;
+	SuppliersCtr supplierCtr;
 	
 	// Tables
 	private Table table;
@@ -48,12 +51,15 @@ public class ProductGUI extends Composite {
 	private Button btn_save;
 	private Button btn_edit;
 	private Button btn_create;
+	private Text txt_supplier;
 	
 	public ProductGUI(Composite parent, int style) {
 		super(parent, style);
 		this.setLayout(new BorderLayout(0, 0));
 		
 		prodCtr = new ProductsCtr();
+		
+		supplierCtr = new SuppliersCtr();
 
 		Composite composite_2 = new Composite(this, SWT.NONE);
 		composite_2.setLayoutData(BorderLayout.WEST);
@@ -126,6 +132,8 @@ public class ProductGUI extends Composite {
 				double RentPrice = 0.0;
 				String CountryOfOrigin = null;
 				int minStock = 0;
+				int supplierId = 0;
+				Supplier supplier = null;
 				try {
 					productId = Integer.parseInt(txt_id.getText());
 				} catch (NumberFormatException ex) {
@@ -138,6 +146,9 @@ public class ProductGUI extends Composite {
 						RentPrice = Double.parseDouble(txt_RentPrice.getText());
 						CountryOfOrigin = txt_CountryOfOrigin.getText();
 						minStock = Integer.parseInt(txt_minStock.getText());
+						supplierId = Integer.parseInt(txt_supplier.getText());
+						supplier = supplierCtr.findById(supplierId);
+						
 					} catch (Exception exc) {
 						MessageBox box = new MessageBox(getShell(), 0);
 						box.setText("Error");
@@ -148,7 +159,7 @@ public class ProductGUI extends Composite {
 					if (!error) {
 						boolean ok = true;
 						try {
-							productId = prodCtr.insertProduct(name, PurchasePrice, SalePrice, RentPrice, CountryOfOrigin, minStock);
+							productId = prodCtr.insertProduct(name, supplier, PurchasePrice, SalePrice, RentPrice, CountryOfOrigin, minStock);
 						} catch (Exception ex1) {
 							ok = false;
 							MessageBox box = new MessageBox(getShell(), 0);
@@ -171,6 +182,8 @@ public class ProductGUI extends Composite {
 						RentPrice = Double.parseDouble(txt_RentPrice.getText());
 						CountryOfOrigin = txt_CountryOfOrigin.getText();
 						minStock = Integer.parseInt(txt_minStock.getText());
+						supplierId = Integer.parseInt(txt_supplier.getText());
+						supplier = supplierCtr.findById(supplierId);
 					} catch (Exception exc) {
 						MessageBox box = new MessageBox(getShell(), 0);
 						box.setText("Error");
@@ -181,7 +194,7 @@ public class ProductGUI extends Composite {
 					if (!error) {
 						boolean ok = true;
 						try {
-							prodCtr.updateProduct(productId, name, PurchasePrice, SalePrice, RentPrice, CountryOfOrigin, minStock);
+							prodCtr.updateProduct(productId, supplier, name, PurchasePrice, SalePrice, RentPrice, CountryOfOrigin, minStock);
 						} catch (Exception ex1) {
 							MessageBox box = new MessageBox(getShell(), 0);
 							box.setText("Error");
@@ -254,6 +267,7 @@ public class ProductGUI extends Composite {
 				btn_create.setEnabled(false);
 				
 				txt_id.setEditable(false);
+				txt_supplier.setEditable(true);
 				txt_name.setEditable(true);
 				txt_PurchasePrice.setEditable(true);
 				txt_SalePrice.setEditable(true);
@@ -278,6 +292,7 @@ public class ProductGUI extends Composite {
 				resetFields();
 				
 				txt_id.setEditable(false);
+				txt_supplier.setEditable(true);
 				txt_name.setEditable(true);
 				txt_PurchasePrice.setEditable(true);
 				txt_SalePrice.setEditable(true);
@@ -307,6 +322,15 @@ public class ProductGUI extends Composite {
 		gd_txt_id.widthHint = 203;
 		txt_id.setEditable(false);
 		txt_id.setLayoutData(gd_txt_id);
+		
+		Label lblSupplier = new Label(composite_7, SWT.NONE);
+		lblSupplier.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		lblSupplier.setText("Supplier:");
+		
+		txt_supplier = new Text(composite_7, SWT.BORDER);
+		txt_supplier.setEditable(false);
+		txt_supplier.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txt_supplier.setEditable(false);
 
 		Label lblName = new Label(composite_7, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -424,8 +448,11 @@ public class ProductGUI extends Composite {
 		txt_SalePrice.setText(String.valueOf(product.getSalePrice()));
 		txt_RentPrice.setText(String.valueOf(product.getRentPrice()));
 		txt_CountryOfOrigin.setText(product.getCountryOfOrigin());
+		txt_minStock.setText(String.valueOf(product.getMinStock()));
+		txt_supplier.setText(String.valueOf(product.getSupplier().getSupplierId()));
 
 		txt_id.setEditable(false);
+		txt_supplier.setEditable(false);
 		txt_name.setEditable(false);
 		txt_PurchasePrice.setEditable(false);
 		txt_SalePrice.setEditable(false);
@@ -440,6 +467,7 @@ public class ProductGUI extends Composite {
 	}
 
 	public void resetFields() {
+		txt_supplier.setText("");
 		txt_id.setText("");
 		txt_name.setText("");
 		txt_PurchasePrice.setText("");
