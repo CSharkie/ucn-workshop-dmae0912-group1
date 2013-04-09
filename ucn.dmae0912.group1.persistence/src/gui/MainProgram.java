@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
@@ -124,7 +125,26 @@ public class MainProgram {
 		mntmClose.setText("Close");
 
 		MenuItem mntmHe = new MenuItem(menu, SWT.NONE);
-		mntmHe.setText("Help");
+		mntmHe.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageBox box = new MessageBox(shell);
+				box.setText("About");
+				box.setMessage("Group nr. 1"
+				+"\n\n" +
+				"Cristi Toma"
+				+"\n" +
+				"Cristian Dan Cojocaru"
+				+"\n" +
+				 "Elisabeta Rebeca Roata"
+				+"\n" +
+				 "Laszlo Czegledi"
+				+"\n" +
+				 "Madalin Claudiu Danceanu");
+				box.open();
+			}
+		});
+		mntmHe.setText("About");
 
 	}
 
